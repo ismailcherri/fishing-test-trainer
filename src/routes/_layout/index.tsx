@@ -43,11 +43,15 @@ function Home() {
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold text-gray-900 mb-4">Fishing License Trainer</h1>
-      <div className="flex flex-col gap-3">
-        {Object.entries(data.sections).map(([id, section]) => (
-          <SectionCard key={id} sectionId={id} section={section} />
-        ))}
-      </div>
+      {Object.keys(data.sections).length === 0 ? (
+        <p className="text-gray-500 text-center">No sections available.</p>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {Object.entries(data.sections).map(([id, section]) => (
+            <SectionCard key={id} sectionId={id} section={section} />
+          ))}
+        </div>
+      )}
     </div>
   )
 }

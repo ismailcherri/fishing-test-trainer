@@ -11,7 +11,7 @@ export function SectionCard({ sectionId, section }: SectionCardProps) {
   const completed = getCompletedCount(sectionId)
   const correct = getCorrectCount(sectionId)
   const total = section.questionCount
-  const progressPercent = total > 0 ? Math.round((completed / total) * 100) : 0
+  const progressPercent = total > 0 ? Math.min(Math.round((completed / total) * 100), 100) : 0
 
   return (
     <Link
