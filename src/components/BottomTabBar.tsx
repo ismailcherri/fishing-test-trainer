@@ -33,7 +33,7 @@ export function BottomTabBar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
 
   return (
-    <nav aria-label="Main navigation" className="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white z-50">
+    <nav aria-label="Main navigation" className="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white z-50 pb-[env(safe-area-inset-bottom,0px)]">
       <div className="max-w-md mx-auto flex justify-around">
         {tabs.map((tab) => {
           const active = tab.isActive(pathname)
