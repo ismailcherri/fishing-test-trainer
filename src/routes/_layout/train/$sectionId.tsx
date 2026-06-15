@@ -19,8 +19,10 @@ function QuestionSession() {
   const [sectionComplete, setSectionComplete] = useState(false)
 
   useEffect(() => {
+    let ignore = false
     loadQuestions()
       .then((data) => {
+        if (ignore) return
         const section = getSection(data, sectionId)
         if (!section) {
           setError(`Section "${sectionId}" not found`)
@@ -40,7 +42,10 @@ function QuestionSession() {
         }
       })
       .catch((e) => setError(e instanceof Error ? e.message : 'Failed to load'))
-      .finally(() => setLoading(false))
+      .finally(() => {
+        if (!ignore) setLoading(false)
+      })
+    return () => { ignore = true }
   }, [sectionId])
 
   const handleAnswer = useCallback(
@@ -57,9 +62,10 @@ function QuestionSession() {
     const nextIndex = currentIndex + 1
     if (nextIndex >= questions.length) {
       setSectionComplete(true)
+    } else {
+      setCurrentIndex(nextIndex)
+      setAnswered(false)
     }
-    setCurrentIndex(nextIndex)
-    setAnswered(false)
   }
 
   const handleRestart = () => {
@@ -129,7 +135,7 @@ function QuestionSession() {
   return (
     <div className="p-4">
       <ProgressBar current={currentIndex + 1} total={questions.length} />
-      <QuestionCard question={question} onAnswer={handleAnswer} />
+      <QuestionCard key={question.number} question={question} onAnswer={handleAnswer} />
       {answered && (
         <button
           onClick={handleNext}
