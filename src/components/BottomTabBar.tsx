@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import { GraduationCap, ClipboardCheck, Settings } from 'lucide-react'
 
 interface Tab {
@@ -30,10 +30,10 @@ const tabs: Tab[] = [
 ]
 
 export function BottomTabBar() {
-  const pathname = window.location.pathname
+  const pathname = useRouterState({ select: (s) => s.location.pathname })
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white z-50">
+    <nav aria-label="Main navigation" className="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white z-50">
       <div className="max-w-md mx-auto flex justify-around">
         {tabs.map((tab) => {
           const active = tab.isActive(pathname)
@@ -41,6 +41,7 @@ export function BottomTabBar() {
             <Link
               key={tab.to}
               to={tab.to}
+              aria-current={active ? 'page' : undefined}
               className={`flex flex-col items-center py-2 px-3 text-xs transition-colors ${
                 active
                   ? 'text-blue-600'
