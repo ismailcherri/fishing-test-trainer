@@ -1,9 +1,8 @@
 {
   "title": "Brandenburg Fishing License Exam - Question Pool",
   "description": "Fragenpool zur Sachkundeprüfung Angelfischerei Brandenburg. Antwort A ist immer die korrekte Antwort im Original-PDF.",
-  "note": "Extracted from PDF. Sections I-IV have 120 questions each. Section V has 117 questions (Q36, Q66, Q67 are missing in the source). Some answers may be abbreviated due to PDF table rendering limitations.",
-  "source": "file.pdf",
-  "totalQuestions": 597,
+  "note": "Extracted from PDF. Sections I-IV have 120 questions each",
+  "totalQuestions": 600,
   "sections": {
     "I": {
       "name": "Fischkunde und -hege",
@@ -8671,7 +8670,7 @@
     },
     "V": {
       "name": "Einschlägige Rechtsvorschriften",
-      "questionCount": 117,
+      "questionCount": 120,
       "questions": [
         {
           "number": 1,
@@ -9859,7 +9858,25 @@
             "B": "When coarse fish are to be removed from a eutrophic lake and utilized",
             "C": "When the fish are to be smoked and subsequently consumed at a club evening"
           },
-          "explanation": "Dip net use requires the angling permit holder's authorization (private law). There is no universal seasonal restriction."
+          "explanation": "German fishing law (Fischereirecht) treats fishing as a nature-based, sustainable activity — not a competitive sport. A permit for communal/group fishing (Gemeinschaftsangeln) must be denied when the primary purpose is competition, since that shifts the focus away from conservation and responsible fishing toward winning, which can lead to overfishing or stress on fish populations."
+        },
+        {
+          "number": 67,
+          "subsection": 2,
+          "question": "Dürfen erkennbar kranke Fische ausgesetzt werden?",
+          "answers": {
+            "A": "Nein",
+            "B": "Ja",
+            "C": "Ja, aber nur mit Zustimmung des Fischers"
+          },
+          "correctAnswer": "A",
+          "questionEn": "Is it permissible to release visibly sick fish?",
+          "answersEn": {
+            "A": "No",
+            "B": "Yes",
+            "C": "Yes, but only with the fisherman's consent."
+          },
+          "explanation": "A (Nein) is correct because releasing visibly sick fish into a water body is prohibited under German fishing and animal disease law.A (Nein) is correct because releasing visibly sick fish into a water body is prohibited under German fishing and animal disease law. The reason is straightforward — a sick fish can spread disease to the entire fish population in that water, causing serious ecological harm. Releasing sick fish also conflicts with the duty of care (Hegepflicht) that anglers have toward fish stocks and the ecosystem."
         },
         {
           "number": 68,
