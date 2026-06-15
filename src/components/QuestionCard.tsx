@@ -5,9 +5,11 @@ import { getShuffledAnswerKeys } from '#/lib/questions'
 interface QuestionCardProps {
   question: Question
   onAnswer: (correct: boolean) => void
+  examMode?: boolean
+  onAdvance?: () => void
 }
 
-export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
+export function QuestionCard({ question, onAnswer, examMode = false, onAdvance }: QuestionCardProps) {
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [shuffledKeys] = useState<string[]>(() => getShuffledAnswerKeys(question))
 
@@ -15,11 +17,18 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
     if (selectedKey !== null) return
     setSelectedKey(key)
     onAnswer(key === question.correctAnswer)
+    if (examMode && onAdvance) {
+      setTimeout(() => onAdvance(), 400)
+    }
   }
 
   const getButtonStyle = (key: string): string => {
     if (selectedKey === null) {
       return 'border-gray-300 bg-white hover:border-blue-400 hover:bg-blue-50'
+    }
+    if (examMode) {
+      if (key === selectedKey) return 'border-blue-500 bg-blue-50 text-blue-800'
+      return 'border-gray-200 bg-gray-50 text-gray-400'
     }
     if (key === question.correctAnswer) {
       return 'border-green-500 bg-green-50 text-green-800'
@@ -50,7 +59,7 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
         ))}
       </div>
 
-      {selectedKey !== null && (
+      {selectedKey !== null && !examMode && (
         <div className="bg-gray-100 rounded-lg p-4 mt-4">
           <div className="mb-3">
             <p className="text-sm font-medium text-gray-500 uppercase mb-1">English</p>
