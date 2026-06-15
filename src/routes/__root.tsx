@@ -12,16 +12,40 @@ export const Route = createRootRoute({
       },
       {
         name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
+        content: 'width=device-width, initial-scale=1, viewport-fit=cover',
       },
       {
         title: 'Fishing License Trainer',
+      },
+      {
+        name: 'theme-color',
+        content: '#2563eb',
+      },
+      {
+        name: 'apple-mobile-web-app-capable',
+        content: 'yes',
+      },
+      {
+        name: 'apple-mobile-web-app-status-bar-style',
+        content: 'black-translucent',
+      },
+      {
+        name: 'apple-mobile-web-app-title',
+        content: 'Fishing Trainer',
       },
     ],
     links: [
       {
         rel: 'stylesheet',
         href: appCss,
+      },
+      {
+        rel: 'manifest',
+        href: '/fishing-test-trainer/manifest.json',
+      },
+      {
+        rel: 'apple-touch-icon',
+        href: '/fishing-test-trainer/icon-192.png',
       },
     ],
   }),
