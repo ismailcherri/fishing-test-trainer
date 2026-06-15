@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
+import { Route as LayoutTrainSectionIdRouteImport } from './routes/_layout/train/$sectionId'
 
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
@@ -21,24 +22,32 @@ const LayoutIndexRoute = LayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutTrainSectionIdRoute = LayoutTrainSectionIdRouteImport.update({
+  id: '/train/$sectionId',
+  path: '/train/$sectionId',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
+  '/train/$sectionId': typeof LayoutTrainSectionIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
+  '/train/$sectionId': typeof LayoutTrainSectionIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
+  '/_layout/train/$sectionId': typeof LayoutTrainSectionIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/train/$sectionId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/_layout' | '/_layout/'
+  to: '/' | '/train/$sectionId'
+  id: '__root__' | '/_layout' | '/_layout/' | '/_layout/train/$sectionId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -61,15 +70,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/train/$sectionId': {
+      id: '/_layout/train/$sectionId'
+      path: '/train/$sectionId'
+      fullPath: '/train/$sectionId'
+      preLoaderRoute: typeof LayoutTrainSectionIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
   }
 }
 
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutTrainSectionIdRoute: typeof LayoutTrainSectionIdRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutTrainSectionIdRoute: LayoutTrainSectionIdRoute,
 }
 
 const LayoutRouteWithChildren =
