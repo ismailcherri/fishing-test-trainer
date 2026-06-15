@@ -9304,6 +9304,24 @@
           "explanation": "Violations in fisheries, animal health (Tierseuchen), or water law (Wasserrecht) are directly relevant grounds for denial."
         },
         {
+          "number": 36,
+          "subsection": 1,
+          "question": "Is vor Beginn des Angelns eine Fischereiabgabe zu entrichen",
+          "answers": {
+            "A": "Ja",
+            "B": "Nein",
+            "C": "Ja, nur für Personen ab dem 16 Lebensjahr"
+          },
+          "correctAnswer": "A",
+          "questionEn": "Must a fishing levy be paid before fishing begins?",
+          "answersEn": {
+            "A": "Yes",
+            "B": "No",
+            "C": "Yes, only for persons aged 16 and older."
+          },
+          "explanation": "In Germany, before you can fish legally, you must pay an annual Fischereiabgabe (fishing levy) to the state authority. This fee is tied to holding a fishing license — not to a specific age."
+        },
+        {
           "number": 37,
           "subsection": 1,
           "question": "Die Aufsicht über die Fischerei ist eine Landesaufgabe. Von welchen Behörden wird sie wahrgenommen?",
@@ -9822,6 +9840,24 @@
             "A": "When private-law authorization exists",
             "B": "From December 31 to April 30",
             "C": "From January 1 to May 31"
+          },
+          "explanation": "Dip net use requires the angling permit holder's authorization (private law). There is no universal seasonal restriction."
+        },
+        {
+          "number": 66,
+          "subsection": 2,
+          "question": "Wann ist für ein Gemeinschaftsangeln die Genehmigung zu versagen?",
+          "answers": {
+            "A": "Wenn das Angeln vorwiegend aus Wettbewerbsgründen erfolgt",
+            "B": "Wenn aus einmen eutrophen See Weißfische entnommen und verwertet werden sollen",
+            "C": "Wenn die Fische geräuchert und darauffolgend bei einem Vereinsabend verzehrt werden sollen"
+          },
+          "correctAnswer": "A",
+          "questionEn": "When must a permit for a group fishing event be refused?",
+          "answersEn": {
+            "A": "When the fishing is conducted primarily for competitive reasons",
+            "B": "When coarse fish are to be removed from a eutrophic lake and utilized",
+            "C": "When the fish are to be smoked and subsequently consumed at a club evening"
           },
           "explanation": "Dip net use requires the angling permit holder's authorization (private law). There is no universal seasonal restriction."
         },
