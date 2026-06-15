@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { shuffleArray, getShuffledAnswerKeys } from '../questions'
+import { shuffleArray, getShuffledAnswerKeys, getSection } from '../questions'
+import type { SectionData } from '../questions'
 import type { Question } from '../questions'
 
 describe('shuffleArray', () => {
@@ -38,5 +39,27 @@ describe('getShuffledAnswerKeys', () => {
     const keys = getShuffledAnswerKeys(question)
     expect(keys).toHaveLength(3)
     expect(keys.sort()).toEqual(['A', 'B', 'C'])
+
+    const results = new Set(
+      Array.from({ length: 20 }, () => getShuffledAnswerKeys(question).join(','))
+    )
+    expect(results.size).toBeGreaterThan(1)
+  })
+})
+
+describe('getSection', () => {
+  it('returns the section for a valid key', () => {
+    const section: SectionData = {
+      name: 'Fish',
+      questionCount: 2,
+      questions: [],
+    }
+    const data = { sections: { I: section } }
+    expect(getSection(data as any, 'I')).toBe(section)
+  })
+
+  it('returns undefined for a missing key', () => {
+    const data = { sections: {} }
+    expect(getSection(data as any, 'II')).toBeUndefined()
   })
 })
