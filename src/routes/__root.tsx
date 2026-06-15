@@ -44,6 +44,11 @@ export const Route = createRootRoute({
         href: appCss,
       },
       {
+        rel: 'icon',
+        type: 'image/png',
+        href: '/fishing-test-trainer/favicon.png',
+      },
+      {
         rel: 'manifest',
         href: '/fishing-test-trainer/manifest.json',
       },
