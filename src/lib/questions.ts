@@ -28,7 +28,7 @@ let cachedData: QuestionsData | null = null
 
 export async function loadQuestions(): Promise<QuestionsData> {
   if (cachedData) return cachedData
-  const res = await fetch('/questions.json')
+  const res = await fetch(`${import.meta.env.BASE_URL}questions.json`)
   if (!res.ok) throw new Error(`Failed to load questions: ${res.status}`)
   cachedData = await res.json()
   return cachedData!

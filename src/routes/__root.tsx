@@ -22,6 +22,10 @@ export const Route = createRootRoute({
         content: '#2563eb',
       },
       {
+        name: 'mobile-web-app-capable',
+        content: 'yes',
+      },
+      {
         name: 'apple-mobile-web-app-capable',
         content: 'yes',
       },
