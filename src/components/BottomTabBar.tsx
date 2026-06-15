@@ -1,0 +1,58 @@
+import { Link } from '@tanstack/react-router'
+import { GraduationCap, ClipboardCheck, Settings } from 'lucide-react'
+
+interface Tab {
+  to: string
+  label: string
+  icon: React.ReactNode
+  isActive: (pathname: string) => boolean
+}
+
+const tabs: Tab[] = [
+  {
+    to: '/',
+    label: 'Train',
+    icon: <GraduationCap className="w-5 h-5" />,
+    isActive: (pathname) => pathname === '/' || pathname.startsWith('/train'),
+  },
+  {
+    to: '/test',
+    label: 'Test',
+    icon: <ClipboardCheck className="w-5 h-5" />,
+    isActive: (pathname) => pathname.startsWith('/test'),
+  },
+  {
+    to: '/settings',
+    label: 'Settings',
+    icon: <Settings className="w-5 h-5" />,
+    isActive: (pathname) => pathname.startsWith('/settings'),
+  },
+]
+
+export function BottomTabBar() {
+  const pathname = window.location.pathname
+
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white z-50">
+      <div className="max-w-md mx-auto flex justify-around">
+        {tabs.map((tab) => {
+          const active = tab.isActive(pathname)
+          return (
+            <Link
+              key={tab.to}
+              to={tab.to}
+              className={`flex flex-col items-center py-2 px-3 text-xs transition-colors ${
+                active
+                  ? 'text-blue-600'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              {tab.icon}
+              <span className="mt-0.5">{tab.label}</span>
+            </Link>
+          )
+        })}
+      </div>
+    </nav>
+  )
+}
