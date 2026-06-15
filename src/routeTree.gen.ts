@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
+import { Route as LayoutTestIndexRouteImport } from './routes/_layout/test/index'
+import { Route as LayoutSettingsIndexRouteImport } from './routes/_layout/settings/index'
 import { Route as LayoutTrainSectionIdRouteImport } from './routes/_layout/train/$sectionId'
 
 const LayoutRoute = LayoutRouteImport.update({
@@ -22,6 +24,16 @@ const LayoutIndexRoute = LayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutTestIndexRoute = LayoutTestIndexRouteImport.update({
+  id: '/test/',
+  path: '/test/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutSettingsIndexRoute = LayoutSettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutTrainSectionIdRoute = LayoutTrainSectionIdRouteImport.update({
   id: '/train/$sectionId',
   path: '/train/$sectionId',
@@ -31,23 +43,35 @@ const LayoutTrainSectionIdRoute = LayoutTrainSectionIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/train/$sectionId': typeof LayoutTrainSectionIdRoute
+  '/settings/': typeof LayoutSettingsIndexRoute
+  '/test/': typeof LayoutTestIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
   '/train/$sectionId': typeof LayoutTrainSectionIdRoute
+  '/settings': typeof LayoutSettingsIndexRoute
+  '/test': typeof LayoutTestIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
   '/_layout/train/$sectionId': typeof LayoutTrainSectionIdRoute
+  '/_layout/settings/': typeof LayoutSettingsIndexRoute
+  '/_layout/test/': typeof LayoutTestIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/train/$sectionId'
+  fullPaths: '/' | '/train/$sectionId' | '/settings/' | '/test/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/train/$sectionId'
-  id: '__root__' | '/_layout' | '/_layout/' | '/_layout/train/$sectionId'
+  to: '/' | '/train/$sectionId' | '/settings' | '/test'
+  id:
+    | '__root__'
+    | '/_layout'
+    | '/_layout/'
+    | '/_layout/train/$sectionId'
+    | '/_layout/settings/'
+    | '/_layout/test/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -70,6 +94,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/test/': {
+      id: '/_layout/test/'
+      path: '/test'
+      fullPath: '/test/'
+      preLoaderRoute: typeof LayoutTestIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/settings/': {
+      id: '/_layout/settings/'
+      path: '/settings'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof LayoutSettingsIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/train/$sectionId': {
       id: '/_layout/train/$sectionId'
       path: '/train/$sectionId'
@@ -83,11 +121,15 @@ declare module '@tanstack/react-router' {
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
   LayoutTrainSectionIdRoute: typeof LayoutTrainSectionIdRoute
+  LayoutSettingsIndexRoute: typeof LayoutSettingsIndexRoute
+  LayoutTestIndexRoute: typeof LayoutTestIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
   LayoutTrainSectionIdRoute: LayoutTrainSectionIdRoute,
+  LayoutSettingsIndexRoute: LayoutSettingsIndexRoute,
+  LayoutTestIndexRoute: LayoutTestIndexRoute,
 }
 
 const LayoutRouteWithChildren =
