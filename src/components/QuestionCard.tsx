@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { Question } from '#/lib/questions'
 import { getShuffledAnswerKeys } from '#/lib/questions'
 
@@ -7,11 +7,18 @@ interface QuestionCardProps {
   onAnswer: (correct: boolean) => void
   examMode?: boolean
   onAdvance?: () => void
+  showAnswer?: boolean
 }
 
-export function QuestionCard({ question, onAnswer, examMode = false, onAdvance }: QuestionCardProps) {
+export function QuestionCard({ question, onAnswer, examMode = false, onAdvance, showAnswer = false }: QuestionCardProps) {
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const [shuffledKeys] = useState<string[]>(() => getShuffledAnswerKeys(question))
+
+  useEffect(() => {
+    if (showAnswer) {
+      setSelectedKey(question.correctAnswer)
+    }
+  }, [question.number, showAnswer, question.correctAnswer])
 
   const handleSelect = (key: string) => {
     if (selectedKey !== null) return
