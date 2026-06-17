@@ -5,9 +5,10 @@ import type { SectionData } from '#/lib/questions'
 interface SectionCardProps {
   sectionId: string
   section: SectionData
+  to?: string
 }
 
-export function SectionCard({ sectionId, section }: SectionCardProps) {
+export function SectionCard({ sectionId, section, to = '/train/$sectionId' }: SectionCardProps) {
   const completed = getCompletedCount(sectionId)
   const correct = getCorrectCount(sectionId)
   const total = section.questionCount
@@ -15,7 +16,7 @@ export function SectionCard({ sectionId, section }: SectionCardProps) {
 
   return (
     <Link
-      to="/train/$sectionId"
+      to={to}
       params={{ sectionId }}
       className="block bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow"
     >

@@ -12,8 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutTestIndexRouteImport } from './routes/_layout/test/index'
-import { Route as LayoutSettingsIndexRouteImport } from './routes/_layout/settings/index'
+import { Route as LayoutQuestionsIndexRouteImport } from './routes/_layout/questions/index'
 import { Route as LayoutTrainSectionIdRouteImport } from './routes/_layout/train/$sectionId'
+import { Route as LayoutQuestionsSectionIdRouteImport } from './routes/_layout/questions/$sectionId'
 
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
@@ -29,9 +30,9 @@ const LayoutTestIndexRoute = LayoutTestIndexRouteImport.update({
   path: '/test/',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutSettingsIndexRoute = LayoutSettingsIndexRouteImport.update({
-  id: '/settings/',
-  path: '/settings/',
+const LayoutQuestionsIndexRoute = LayoutQuestionsIndexRouteImport.update({
+  id: '/questions/',
+  path: '/questions/',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutTrainSectionIdRoute = LayoutTrainSectionIdRouteImport.update({
@@ -39,38 +40,58 @@ const LayoutTrainSectionIdRoute = LayoutTrainSectionIdRouteImport.update({
   path: '/train/$sectionId',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutQuestionsSectionIdRoute =
+  LayoutQuestionsSectionIdRouteImport.update({
+    id: '/questions/$sectionId',
+    path: '/questions/$sectionId',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
+  '/questions/$sectionId': typeof LayoutQuestionsSectionIdRoute
   '/train/$sectionId': typeof LayoutTrainSectionIdRoute
-  '/settings/': typeof LayoutSettingsIndexRoute
+  '/questions/': typeof LayoutQuestionsIndexRoute
   '/test/': typeof LayoutTestIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof LayoutIndexRoute
+  '/questions/$sectionId': typeof LayoutQuestionsSectionIdRoute
   '/train/$sectionId': typeof LayoutTrainSectionIdRoute
-  '/settings': typeof LayoutSettingsIndexRoute
+  '/questions': typeof LayoutQuestionsIndexRoute
   '/test': typeof LayoutTestIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
+  '/_layout/questions/$sectionId': typeof LayoutQuestionsSectionIdRoute
   '/_layout/train/$sectionId': typeof LayoutTrainSectionIdRoute
-  '/_layout/settings/': typeof LayoutSettingsIndexRoute
+  '/_layout/questions/': typeof LayoutQuestionsIndexRoute
   '/_layout/test/': typeof LayoutTestIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/train/$sectionId' | '/settings/' | '/test/'
+  fullPaths:
+    | '/'
+    | '/questions/$sectionId'
+    | '/train/$sectionId'
+    | '/questions/'
+    | '/test/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/train/$sectionId' | '/settings' | '/test'
+  to:
+    | '/'
+    | '/questions/$sectionId'
+    | '/train/$sectionId'
+    | '/questions'
+    | '/test'
   id:
     | '__root__'
     | '/_layout'
     | '/_layout/'
+    | '/_layout/questions/$sectionId'
     | '/_layout/train/$sectionId'
-    | '/_layout/settings/'
+    | '/_layout/questions/'
     | '/_layout/test/'
   fileRoutesById: FileRoutesById
 }
@@ -101,11 +122,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutTestIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_layout/settings/': {
-      id: '/_layout/settings/'
-      path: '/settings'
-      fullPath: '/settings/'
-      preLoaderRoute: typeof LayoutSettingsIndexRouteImport
+    '/_layout/questions/': {
+      id: '/_layout/questions/'
+      path: '/questions'
+      fullPath: '/questions/'
+      preLoaderRoute: typeof LayoutQuestionsIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/train/$sectionId': {
@@ -115,20 +136,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutTrainSectionIdRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/questions/$sectionId': {
+      id: '/_layout/questions/$sectionId'
+      path: '/questions/$sectionId'
+      fullPath: '/questions/$sectionId'
+      preLoaderRoute: typeof LayoutQuestionsSectionIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
   }
 }
 
 interface LayoutRouteChildren {
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutQuestionsSectionIdRoute: typeof LayoutQuestionsSectionIdRoute
   LayoutTrainSectionIdRoute: typeof LayoutTrainSectionIdRoute
-  LayoutSettingsIndexRoute: typeof LayoutSettingsIndexRoute
+  LayoutQuestionsIndexRoute: typeof LayoutQuestionsIndexRoute
   LayoutTestIndexRoute: typeof LayoutTestIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutQuestionsSectionIdRoute: LayoutQuestionsSectionIdRoute,
   LayoutTrainSectionIdRoute: LayoutTrainSectionIdRoute,
-  LayoutSettingsIndexRoute: LayoutSettingsIndexRoute,
+  LayoutQuestionsIndexRoute: LayoutQuestionsIndexRoute,
   LayoutTestIndexRoute: LayoutTestIndexRoute,
 }
 
