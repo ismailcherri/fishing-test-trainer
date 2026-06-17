@@ -1,6 +1,6 @@
 import { ProgressBar } from '#/components/ProgressBar'
 import { QuestionCard } from '#/components/QuestionCard'
-import { clearProgress, getProgress, saveProgress } from '#/lib/progress'
+import { clearStats, getStats, isMemorized, recordAnswer } from '#/lib/stats'
 import { getSection, loadQuestions, type Question } from '#/lib/questions'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useCallback, useEffect, useState } from 'react'
@@ -30,9 +30,9 @@ function QuestionSession() {
         }
         setQuestions(section.questions)
 
-        const progress = getProgress(sectionId)
+        const stats = getStats(sectionId)
         const firstUnanswered = section.questions.findIndex(
-          (q) => !progress.some((p) => p.questionNumber === q.number)
+          (q) => !stats.some((s) => s.questionNumber === q.number)
         )
         if (firstUnanswered === -1) {
           setSectionComplete(true)
@@ -54,7 +54,7 @@ function QuestionSession() {
     (correct: boolean) => {
       const question = questions[currentIndex]
       if (!question) return
-      saveProgress(sectionId, question.number, correct)
+      recordAnswer(sectionId, question.number, correct)
       setAnswered(true)
     },
     [questions, currentIndex, sectionId]
@@ -71,7 +71,7 @@ function QuestionSession() {
   }
 
   const handleRestart = () => {
-    clearProgress(sectionId)
+    clearStats(sectionId)
     setCurrentIndex(0)
     setAnswered(false)
     setSectionComplete(false)
@@ -100,9 +100,9 @@ function QuestionSession() {
   }
 
   if (sectionComplete) {
-    const progress = getProgress(sectionId)
-    const correct = progress.filter((p) => p.correct).length
-    const total = progress.length
+    const stats = getStats(sectionId)
+    const memorized = stats.filter((s) => isMemorized(s)).length
+    const total = stats.length
 
     return (
       <div className="p-6 text-center">
@@ -110,7 +110,7 @@ function QuestionSession() {
           Section Complete!
         </h2>
         <p className="mb-4 text-gray-600">
-          {correct} / {total} correct ({Math.round((correct / total) * 100)}%)
+          {memorized} / {total} memorized
         </p>
         <div className="flex flex-col gap-3">
           <button

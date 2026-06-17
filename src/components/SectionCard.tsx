@@ -1,4 +1,4 @@
-import { getCompletedCount, getCorrectCount } from '#/lib/progress'
+import { getMemorizedCount, getStats } from '#/lib/stats'
 import type { SectionData } from '#/lib/questions'
 import { Link } from '@tanstack/react-router'
 
@@ -13,11 +13,11 @@ export function SectionCard({
   section,
   to = '/train/$sectionId',
 }: SectionCardProps) {
-  const completed = getCompletedCount(sectionId)
-  const correct = getCorrectCount(sectionId)
+  const attempted = getStats(sectionId).length
+  const memorized = getMemorizedCount(sectionId)
   const total = section.questionCount
   const progressPercent =
-    total > 0 ? Math.min(Math.round((completed / total) * 100), 100) : 0
+    total > 0 ? Math.min(Math.round((attempted / total) * 100), 100) : 0
 
   return (
     <Link
@@ -28,7 +28,7 @@ export function SectionCard({
       <div className="mb-2 flex items-start justify-between">
         <h2 className="font-semibold text-gray-900">{section.name}</h2>
         <span className="text-sm text-gray-500">
-          {completed}/{total}
+          {attempted}/{total}
         </span>
       </div>
       <div className="mb-1 h-2 w-full rounded-full bg-gray-200">
@@ -37,9 +37,9 @@ export function SectionCard({
           style={{ width: `${progressPercent}%` }}
         />
       </div>
-      {completed > 0 && (
+      {attempted > 0 && (
         <p className="mt-1 text-xs text-gray-500">
-          {correct} correct ({Math.round((correct / completed) * 100) || 0}%)
+          {memorized} memorized
         </p>
       )}
     </Link>
