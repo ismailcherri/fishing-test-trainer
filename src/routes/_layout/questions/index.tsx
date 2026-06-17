@@ -1,7 +1,7 @@
+import { SectionCard } from '#/components/SectionCard'
+import { loadQuestions, type QuestionsData } from '#/lib/questions'
 import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { loadQuestions, type QuestionsData } from '#/lib/questions'
-import { SectionCard } from '#/components/SectionCard'
 
 export const Route = createFileRoute('/_layout/questions/')({
   component: QuestionsIndex,
@@ -35,10 +35,15 @@ function QuestionsIndex() {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold text-gray-900 mb-4">Study Questions</h1>
+      <h1 className="mb-4 text-xl font-bold text-gray-900">Study Questions</h1>
       <div className="flex flex-col gap-3">
         {Object.entries(data.sections).map(([id, section]) => (
-          <SectionCard key={id} sectionId={id} section={section} to="/questions/$sectionId" />
+          <SectionCard
+            key={id}
+            sectionId={id}
+            section={section}
+            to="/questions/$sectionId"
+          />
         ))}
       </div>
     </div>

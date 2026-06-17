@@ -4,19 +4,20 @@ interface ProgressBarProps {
 }
 
 export function ProgressBar({ current, total }: ProgressBarProps) {
-  const percent = total > 0 ? Math.min(100, Math.round((current / total) * 100)) : 0
+  const percent =
+    total > 0 ? Math.min(100, Math.round((current / total) * 100)) : 0
 
   return (
     <div className="mb-4">
-      <div className="flex justify-between items-center mb-1">
+      <div className="mb-1 flex items-center justify-between">
         <span className="text-sm font-medium text-gray-700">
           Question {current} / {total}
         </span>
-        <span className="text-sm text-gray-500">{percent}%</span>
+        <span className="ml-4 text-sm text-gray-500">{percent}%</span>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2">
+      <div className="h-2 w-full rounded-full bg-gray-200">
         <div
-          className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+          className="h-2 rounded-full bg-blue-600 transition-all duration-300"
           style={{ width: `${percent}%` }}
         />
       </div>

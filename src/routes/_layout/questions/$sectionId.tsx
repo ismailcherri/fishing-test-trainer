@@ -1,8 +1,8 @@
+import { ProgressBar } from '#/components/ProgressBar'
+import { QuestionCard } from '#/components/QuestionCard'
+import { getSection, loadQuestions, type Question } from '#/lib/questions'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { loadQuestions, getSection, type Question } from '#/lib/questions'
-import { QuestionCard } from '#/components/QuestionCard'
-import { ProgressBar } from '#/components/ProgressBar'
 
 export const Route = createFileRoute('/_layout/questions/$sectionId')({
   component: QuestionBrowse,
@@ -31,7 +31,9 @@ function QuestionBrowse() {
       .finally(() => {
         if (!ignore) setLoading(false)
       })
-    return () => { ignore = true }
+    return () => {
+      ignore = true
+    }
   }, [sectionId])
 
   if (loading) {
@@ -46,7 +48,10 @@ function QuestionBrowse() {
     return (
       <div className="p-6 text-center">
         <p className="text-red-600">{error}</p>
-        <Link to="/questions" className="mt-4 inline-block text-blue-600 underline text-sm">
+        <Link
+          to="/questions"
+          className="mt-4 inline-block text-sm text-blue-600 underline"
+        >
           Back to questions
         </Link>
       </div>
@@ -57,7 +62,10 @@ function QuestionBrowse() {
     return (
       <div className="p-6 text-center text-gray-500">
         <p>No questions found.</p>
-        <Link to="/questions" className="mt-4 inline-block text-blue-600 underline text-sm">
+        <Link
+          to="/questions"
+          className="mt-4 inline-block text-sm text-blue-600 underline"
+        >
           Back to questions
         </Link>
       </div>
@@ -77,25 +85,25 @@ function QuestionBrowse() {
         onAnswer={() => {}}
         showAnswer
       />
-      <div className="flex gap-3 mt-4">
+      <div className="mt-4 flex gap-3">
         <button
           onClick={() => setCurrentIndex((i) => i - 1)}
           disabled={isFirst}
-          className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 rounded-lg bg-gray-200 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Previous
         </button>
         {isLast ? (
           <Link
             to="/questions"
-            className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors text-center"
+            className="flex-1 rounded-lg bg-blue-600 py-3 text-center font-medium text-white transition-colors hover:bg-blue-700"
           >
             Done
           </Link>
         ) : (
           <button
             onClick={() => setCurrentIndex((i) => i + 1)}
-            className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className="flex-1 rounded-lg bg-blue-600 py-3 font-medium text-white transition-colors hover:bg-blue-700"
           >
             Next
           </button>

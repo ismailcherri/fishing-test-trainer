@@ -1,4 +1,4 @@
-import { writeFileSync, copyFileSync, existsSync } from 'node:fs'
+import { copyFileSync, existsSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 const clientDir = join(import.meta.dirname, '..', 'dist', 'client')
@@ -10,7 +10,9 @@ if (existsSync(shellPath)) {
   copyFileSync(shellPath, indexPath)
   console.log(`Copied _shell.html → index.html`)
 } else {
-  console.log('_shell.html not found — prerender may not have run. Using existing index.html if present.')
+  console.log(
+    '_shell.html not found — prerender may not have run. Using existing index.html if present.'
+  )
 }
 
 if (!existsSync(indexPath)) {

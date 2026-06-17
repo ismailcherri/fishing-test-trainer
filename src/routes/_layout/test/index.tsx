@@ -1,11 +1,16 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
-import { useEffect, useState, useCallback, useRef } from 'react'
-import { loadQuestions, type QuestionsData } from '#/lib/questions'
-import { generateTest, scoreTest, type QuestionWithSection, type TestResult } from '#/lib/exam'
-import { QuestionCard } from '#/components/QuestionCard'
 import { ProgressBar } from '#/components/ProgressBar'
-import { Timer } from '#/components/Timer'
+import { QuestionCard } from '#/components/QuestionCard'
 import { TestResults } from '#/components/TestResults'
+import { Timer } from '#/components/Timer'
+import {
+  generateTest,
+  scoreTest,
+  type QuestionWithSection,
+  type TestResult,
+} from '#/lib/exam'
+import { loadQuestions, type QuestionsData } from '#/lib/questions'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 type Phase = 'start' | 'exam' | 'results'
 
@@ -57,7 +62,7 @@ function TestPage() {
         return next
       })
     },
-    [questions, currentIndex],
+    [questions, currentIndex]
   )
 
   const handleAdvance = useCallback(() => {
@@ -107,7 +112,10 @@ function TestPage() {
     return (
       <div className="p-6 text-center">
         <p className="text-red-600">{error}</p>
-        <Link to="/" className="mt-4 inline-block text-blue-600 underline text-sm">
+        <Link
+          to="/"
+          className="mt-4 inline-block text-sm text-blue-600 underline"
+        >
           Back to sections
         </Link>
       </div>
@@ -117,9 +125,9 @@ function TestPage() {
   if (phase === 'start') {
     return (
       <div className="p-4">
-        <h1 className="text-xl font-bold text-gray-900 mb-4">Mock Exam</h1>
-        <div className="bg-white rounded-lg border border-gray-200 p-4 mb-6">
-          <h2 className="font-semibold text-gray-900 mb-3">Exam Rules</h2>
+        <h1 className="mb-4 text-xl font-bold text-gray-900">Mock Exam</h1>
+        <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4">
+          <h2 className="mb-3 font-semibold text-gray-900">Exam Rules</h2>
           <ul className="space-y-2 text-sm text-gray-700">
             <li>60 questions from all 5 sections (12 each)</li>
             <li>120 minutes time limit</li>
@@ -131,7 +139,7 @@ function TestPage() {
         </div>
         <button
           onClick={handleStart}
-          className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          className="w-full rounded-lg bg-blue-600 py-3 font-medium text-white transition-colors hover:bg-blue-700"
         >
           Start Test
         </button>
@@ -148,7 +156,10 @@ function TestPage() {
     return (
       <div className="p-6 text-center text-gray-500">
         <p>No question found.</p>
-        <Link to="/" className="mt-4 inline-block text-blue-600 underline text-sm">
+        <Link
+          to="/"
+          className="mt-4 inline-block text-sm text-blue-600 underline"
+        >
           Back to sections
         </Link>
       </div>
@@ -157,10 +168,14 @@ function TestPage() {
 
   return (
     <div className="p-4">
-      <div className="flex justify-between items-center mb-4">
+      <div className="mb-4 flex items-center justify-between">
         <ProgressBar current={currentIndex + 1} total={questions.length} />
         <div className="ml-4">
-          <Timer totalSeconds={TEST_DURATION} running={timerRunning} onExpire={handleTimerExpire} />
+          <Timer
+            totalSeconds={TEST_DURATION}
+            running={timerRunning}
+            onExpire={handleTimerExpire}
+          />
         </div>
       </div>
       <QuestionCard

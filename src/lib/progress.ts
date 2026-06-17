@@ -15,7 +15,7 @@ export function getProgress(sectionId: string): ProgressEntry[] {
     if (!Array.isArray(parsed)) return []
     return parsed.filter(
       (e): e is ProgressEntry =>
-        typeof e.questionNumber === 'number' && typeof e.correct === 'boolean',
+        typeof e.questionNumber === 'number' && typeof e.correct === 'boolean'
     )
   } catch {
     return []
@@ -25,10 +25,12 @@ export function getProgress(sectionId: string): ProgressEntry[] {
 export function saveProgress(
   sectionId: string,
   questionNumber: number,
-  correct: boolean,
+  correct: boolean
 ): void {
   const progress = getProgress(sectionId)
-  const existing = progress.findIndex((p) => p.questionNumber === questionNumber)
+  const existing = progress.findIndex(
+    (p) => p.questionNumber === questionNumber
+  )
   if (existing !== -1) {
     progress[existing] = { questionNumber, correct }
   } else {

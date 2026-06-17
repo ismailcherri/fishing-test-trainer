@@ -18,10 +18,11 @@ Add `nitro` dependency and configure Vite:
 import { nitro } from 'nitro/vite'
 
 // Add to plugins array:
-tanstackStart(), nitro({ preset: 'github_pages' }), viteReact()
+;(tanstackStart(), nitro({ preset: 'github_pages' }), viteReact())
 ```
 
 Nitro's `github_pages` preset:
+
 - Generates pre-rendered HTML for all routes
 - Creates `.nojekyll` file
 - Outputs to `.output/public/`
@@ -36,6 +37,7 @@ Add `basepath: '/fishing-test-trainer'` to TanStack Router config in `src/router
 ### Routes Pre-rendered
 
 All 7 routes pre-rendered at build time:
+
 - `/` → index.html
 - `/train/I` through `/train/V` → train/I/index.html, etc.
 - `/test` → test/index.html
@@ -54,8 +56,16 @@ All 7 routes pre-rendered at build time:
   "background_color": "#f9fafb",
   "theme_color": "#2563eb",
   "icons": [
-    { "src": "/fishing-test-trainer/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/fishing-test-trainer/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    {
+      "src": "/fishing-test-trainer/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/fishing-test-trainer/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }
 ```
@@ -82,6 +92,7 @@ Two PNG icons (192x192 and 512x512). Generated as simple blue squares with a fis
 Trigger: push to `main` branch.
 
 Steps:
+
 1. Checkout repo
 2. Setup Node.js
 3. `npm ci`
@@ -97,16 +108,16 @@ The `gh-pages` branch will contain the static output, served by GitHub Pages.
 
 ## Files Changed
 
-| File | Action | Purpose |
-|------|--------|---------|
-| `vite.config.ts` | Modify | Add nitro plugin, set base path |
-| `src/router.tsx` | Modify | Add basepath |
-| `package.json` | Modify | Add `nitro` dependency |
-| `public/manifest.json` | Create | PWA manifest |
-| `public/icon-192.png` | Create | PWA icon |
-| `public/icon-512.png` | Create | PWA icon |
-| `src/routes/__root.tsx` | Modify | Add PWA/iOS meta tags |
-| `.github/workflows/deploy.yml` | Create | CI/CD deployment |
+| File                           | Action | Purpose                         |
+| ------------------------------ | ------ | ------------------------------- |
+| `vite.config.ts`               | Modify | Add nitro plugin, set base path |
+| `src/router.tsx`               | Modify | Add basepath                    |
+| `package.json`                 | Modify | Add `nitro` dependency          |
+| `public/manifest.json`         | Create | PWA manifest                    |
+| `public/icon-192.png`          | Create | PWA icon                        |
+| `public/icon-512.png`          | Create | PWA icon                        |
+| `src/routes/__root.tsx`        | Modify | Add PWA/iOS meta tags           |
+| `.github/workflows/deploy.yml` | Create | CI/CD deployment                |
 
 ## Non-Goals
 

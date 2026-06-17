@@ -33,6 +33,7 @@ Replace the Settings tab with a Questions tab for browsing/studying. Shows quest
 ## QuestionCard Changes
 
 Add `showAnswer` prop. When true:
+
 - Answer buttons rendered as static read-only (no click handler)
 - Correct answer highlighted green
 - Translations + explanation visible immediately
@@ -40,10 +41,10 @@ Add `showAnswer` prop. When true:
 
 ## Files
 
-| File | Action |
-|------|--------|
-| `src/routes/_layout/settings/index.tsx` | Remove (or rename dir) |
-| `src/routes/_layout/questions/index.tsx` | Create — section list |
-| `src/routes/_layout/questions/$sectionId.tsx` | Create — question browse |
-| `src/components/QuestionCard.tsx` | Modify — add showAnswer mode |
-| `src/components/BottomTabBar.tsx` | Modify — rename Settings → Questions, BookOpen icon |
+| File                                          | Action                                              |
+| --------------------------------------------- | --------------------------------------------------- |
+| `src/routes/_layout/settings/index.tsx`       | Remove (or rename dir)                              |
+| `src/routes/_layout/questions/index.tsx`      | Create — section list                               |
+| `src/routes/_layout/questions/$sectionId.tsx` | Create — question browse                            |
+| `src/components/QuestionCard.tsx`             | Modify — add showAnswer mode                        |
+| `src/components/BottomTabBar.tsx`             | Modify — rename Settings → Questions, BookOpen icon |

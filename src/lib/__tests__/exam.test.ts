@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { generateTest, scoreTest } from '../exam'
 import type { QuestionsData } from '../questions'
 
@@ -20,14 +20,21 @@ function makeData(sectionCounts: Record<string, number>): QuestionsData {
   let num = 1
   for (const [id, count] of Object.entries(sectionCounts)) {
     const qs = makeQuestions(count, id).map((q) => ({ ...q, number: num++ }))
-    sections[id] = { name: `Section ${id}`, questionCount: qs.length, questions: qs }
+    sections[id] = {
+      name: `Section ${id}`,
+      questionCount: qs.length,
+      questions: qs,
+    }
   }
   return {
     title: 'Test',
     description: '',
     note: '',
     source: '',
-    totalQuestions: Object.values(sections).reduce((s, sec) => s + sec.questions.length, 0),
+    totalQuestions: Object.values(sections).reduce(
+      (s, sec) => s + sec.questions.length,
+      0
+    ),
     sections,
   }
 }

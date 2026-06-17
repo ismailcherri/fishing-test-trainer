@@ -41,7 +41,7 @@ export function generateTest(data: QuestionsData): QuestionWithSection[] {
 export function scoreTest(
   questions: QuestionWithSection[],
   answers: Map<number, string | null>,
-  data: QuestionsData,
+  data: QuestionsData
 ): TestResult {
   const testAnswers: TestAnswer[] = questions.map((q) => {
     const selected = answers.get(q.number) ?? null
@@ -54,7 +54,7 @@ export function scoreTest(
   const sectionResults: SectionResult[] = Object.entries(data.sections).map(
     ([sectionId, section]) => {
       const sectionAnswers = testAnswers.filter(
-        (a) => a.question.sectionId === sectionId,
+        (a) => a.question.sectionId === sectionId
       )
       const correct = sectionAnswers.filter((a) => a.correct).length
       return {
@@ -64,12 +64,18 @@ export function scoreTest(
         total: sectionAnswers.length,
         passed: sectionAnswers.length - correct <= 6,
       }
-    },
+    }
   )
 
   const overallPassed = totalCorrect >= 45
   const allSectionsPassed = sectionResults.every((s) => s.passed)
   const passed = overallPassed && allSectionsPassed
 
-  return { answers: testAnswers, totalCorrect, totalQuestions: questions.length, passed, sectionResults }
+  return {
+    answers: testAnswers,
+    totalCorrect,
+    totalQuestions: questions.length,
+    passed,
+    sectionResults,
+  }
 }

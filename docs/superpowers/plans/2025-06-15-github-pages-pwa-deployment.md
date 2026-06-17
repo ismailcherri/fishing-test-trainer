@@ -12,22 +12,23 @@
 
 ### File Map
 
-| File | Action | Purpose |
-|------|--------|---------|
-| `package.json` | Modify | Add `nitro` dependency |
-| `vite.config.ts` | Modify | Add nitro plugin, set base path |
-| `src/router.tsx` | Modify | Add basepath |
-| `public/manifest.json` | Create | PWA manifest |
-| `public/icon-192.png` | Create | PWA icon 192x192 |
-| `public/icon-512.png` | Create | PWA icon 512x512 |
-| `src/routes/__root.tsx` | Modify | Add PWA/iOS meta tags |
-| `.github/workflows/deploy.yml` | Create | CI/CD deployment |
+| File                           | Action | Purpose                         |
+| ------------------------------ | ------ | ------------------------------- |
+| `package.json`                 | Modify | Add `nitro` dependency          |
+| `vite.config.ts`               | Modify | Add nitro plugin, set base path |
+| `src/router.tsx`               | Modify | Add basepath                    |
+| `public/manifest.json`         | Create | PWA manifest                    |
+| `public/icon-192.png`          | Create | PWA icon 192x192                |
+| `public/icon-512.png`          | Create | PWA icon 512x512                |
+| `src/routes/__root.tsx`        | Modify | Add PWA/iOS meta tags           |
+| `.github/workflows/deploy.yml` | Create | CI/CD deployment                |
 
 ---
 
 ### Task 1: Install Nitro and configure Vite
 
 **Files:**
+
 - Modify: `package.json`
 - Modify: `vite.config.ts`
 
@@ -42,20 +43,29 @@ npm install nitro
 Read the current file, then apply these changes:
 
 Add the nitro import at the top (after existing imports):
+
 ```ts
 import { nitro } from 'nitro/vite'
 ```
 
 Set the base path in the config object (add `base` property):
+
 ```ts
 const config = defineConfig({
   base: '/fishing-test-trainer/',
   resolve: { tsconfigPaths: true },
-  plugins: [devtools(), tailwindcss(), tanstackStart(), nitro({ preset: 'github_pages' }), viteReact()],
+  plugins: [
+    devtools(),
+    tailwindcss(),
+    tanstackStart(),
+    nitro({ preset: 'github_pages' }),
+    viteReact(),
+  ],
 })
 ```
 
 The final file should look like:
+
 ```ts
 import { defineConfig } from 'vite'
 import { devtools } from '@tanstack/devtools-vite'
@@ -67,7 +77,13 @@ import tailwindcss from '@tailwindcss/vite'
 const config = defineConfig({
   base: '/fishing-test-trainer/',
   resolve: { tsconfigPaths: true },
-  plugins: [devtools(), tailwindcss(), tanstackStart(), nitro({ preset: 'github_pages' }), viteReact()],
+  plugins: [
+    devtools(),
+    tailwindcss(),
+    tanstackStart(),
+    nitro({ preset: 'github_pages' }),
+    viteReact(),
+  ],
 })
 
 export default config
@@ -85,6 +101,7 @@ git commit -m "feat: add nitro with github_pages preset and base path"
 ### Task 2: Configure router basepath
 
 **Files:**
+
 - Modify: `src/router.tsx`
 
 - [ ] **Step 1: Modify `src/router.tsx`**
@@ -92,6 +109,7 @@ git commit -m "feat: add nitro with github_pages preset and base path"
 Read the current file, then add `basepath` to the router config:
 
 Current:
+
 ```ts
 const router = createTanStackRouter({
   routeTree,
@@ -102,6 +120,7 @@ const router = createTanStackRouter({
 ```
 
 Change to:
+
 ```ts
 const router = createTanStackRouter({
   routeTree,
@@ -124,6 +143,7 @@ git commit -m "feat: add basepath for GitHub Pages deployment"
 ### Task 3: Create PWA manifest and icons
 
 **Files:**
+
 - Create: `public/manifest.json`
 - Create: `public/icon-192.png`
 - Create: `public/icon-512.png`
@@ -171,6 +191,7 @@ Since we can't install canvas dependencies, create SVG files and convert them. A
 Create `public/icon-192.png` and `public/icon-512.png` as simple placeholder blue squares. For real icons, you can replace them later.
 
 Run this to create minimal valid PNGs:
+
 ```bash
 printf '\x89PNG\r\n\x1a\n' > /tmp/png_header
 # Create a minimal 1x1 blue PNG using node's built-in zlib
@@ -187,7 +208,7 @@ function createPNG(size, r, g, b) {
   ihdr[10] = 0;  // compression
   ihdr[11] = 0;  // filter
   ihdr[12] = 0;  // interlace
-  
+
   // IDAT - raw pixel data (one row with filter byte 0, then RGB pixels)
   const rawData = Buffer.alloc(size * (1 + size * 3));
   for (let y = 0; y < size; y++) {
@@ -199,9 +220,9 @@ function createPNG(size, r, g, b) {
       rawData[offset + 2] = b;
     }
   }
-  
+
   const deflated = zlib.deflateSync(rawData);
-  
+
   function chunk(type, data) {
     const len = Buffer.alloc(4);
     len.writeUInt32BE(data.length, 0);
@@ -211,7 +232,7 @@ function createPNG(size, r, g, b) {
     crcB.writeUInt32BE(crc, 0);
     return Buffer.concat([len, typeB, data, crcB]);
   }
-  
+
   function crc32(buf) {
     let c;
     const table = [];
@@ -228,12 +249,12 @@ function createPNG(size, r, g, b) {
     }
     return (c ^ 0xffffffff) >>> 0;
   }
-  
+
   const signature = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]);
   const ihdrChunk = chunk('IHDR', ihdr);
   const idatChunk = chunk('IDAT', deflated);
   const iendChunk = chunk('IEND', Buffer.alloc(0));
-  
+
   return Buffer.concat([signature, ihdrChunk, idatChunk, iendChunk]);
 }
 
@@ -256,6 +277,7 @@ git commit -m "feat: add PWA manifest and app icons"
 ### Task 4: Add PWA and iOS meta tags to root route
 
 **Files:**
+
 - Modify: `src/routes/__root.tsx`
 
 - [ ] **Step 1: Read and modify `src/routes/__root.tsx`**
@@ -263,6 +285,7 @@ git commit -m "feat: add PWA manifest and app icons"
 Add the PWA/iOS meta tags and manifest link to the `head` function's `meta` and `links` arrays.
 
 Current `head` function:
+
 ```tsx
   head: () => ({
     meta: [
@@ -287,6 +310,7 @@ Current `head` function:
 ```
 
 Replace with:
+
 ```tsx
   head: () => ({
     meta: [
@@ -346,6 +370,7 @@ git commit -m "feat: add PWA and iOS meta tags"
 ### Task 5: Create GitHub Actions workflow
 
 **Files:**
+
 - Create: `.github/workflows/deploy.yml`
 
 - [ ] **Step 1: Create directory and workflow file**
@@ -402,6 +427,7 @@ git commit -m "ci: add GitHub Actions deploy workflow for GitHub Pages"
 ### Task 6: Build verification and push
 
 **Files:**
+
 - None (verification only)
 
 - [ ] **Step 1: Run existing tests**
@@ -409,6 +435,7 @@ git commit -m "ci: add GitHub Actions deploy workflow for GitHub Pages"
 ```bash
 npx vitest run
 ```
+
 Expected: 13 tests pass
 
 - [ ] **Step 2: Run build**
@@ -416,6 +443,7 @@ Expected: 13 tests pass
 ```bash
 npm run build
 ```
+
 Expected: Build succeeds, output in `.output/public/` with pre-rendered HTML files
 
 - [ ] **Step 3: Verify output structure**
@@ -423,6 +451,7 @@ Expected: Build succeeds, output in `.output/public/` with pre-rendered HTML fil
 ```bash
 ls .output/public/
 ```
+
 Expected: Contains `index.html`, `manifest.json`, `.nojekyll`, `icon-*.png`, and subdirectories for routes
 
 - [ ] **Step 4: Verify routes pre-rendered**
@@ -430,6 +459,7 @@ Expected: Contains `index.html`, `manifest.json`, `.nojekyll`, `icon-*.png`, and
 ```bash
 ls .output/public/train/
 ```
+
 Expected: Contains `I/index.html`, `II/index.html`, etc.
 
 - [ ] **Step 5: Commit any remaining changes**
@@ -444,4 +474,5 @@ git commit -m "chore: final build verification" || echo "Nothing to commit"
 ```bash
 git push origin main
 ```
+
 Expected: GitHub Actions workflow triggers, deploys to GitHub Pages at `https://ismailcherri.github.io/fishing-test-trainer/`

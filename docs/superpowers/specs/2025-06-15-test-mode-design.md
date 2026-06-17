@@ -37,6 +37,7 @@ TestPage (/test)
 ## QuestionCard Exam Mode
 
 Add an `examMode` prop to `QuestionCard`:
+
 - When `true`: no color feedback on selection, no English/explanation section, auto-advance after answer via callback
 - When `false` (default): existing behavior unchanged
 
@@ -50,6 +51,7 @@ Add an `examMode` prop to `QuestionCard`:
 ## Test Session State
 
 Managed in `TestPage` component:
+
 - Phase: `"start"` | `"exam"` | `"results"`
 - Session question pool (60 shuffled questions)
 - Current question index
@@ -80,13 +82,13 @@ function generateTest(data: QuestionsData): QuestionWithSection[] {
 
 ## Files
 
-| File | Action | Purpose |
-|------|--------|---------|
-| `src/routes/_layout/test/index.tsx` | Modify | Full test page implementation |
-| `src/components/QuestionCard.tsx` | Modify | Add `examMode` prop |
-| `src/components/Timer.tsx` | Create | Countdown timer display |
-| `src/components/TestResults.tsx` | Create | Results screen with breakdown |
-| `src/lib/exam.ts` | Create | Question pool generation, scoring |
+| File                                | Action | Purpose                           |
+| ----------------------------------- | ------ | --------------------------------- |
+| `src/routes/_layout/test/index.tsx` | Modify | Full test page implementation     |
+| `src/components/QuestionCard.tsx`   | Modify | Add `examMode` prop               |
+| `src/components/Timer.tsx`          | Create | Countdown timer display           |
+| `src/components/TestResults.tsx`    | Create | Results screen with breakdown     |
+| `src/lib/exam.ts`                   | Create | Question pool generation, scoring |
 
 ## Non-Goals
 

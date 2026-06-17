@@ -34,7 +34,10 @@ export async function loadQuestions(): Promise<QuestionsData> {
   return cachedData!
 }
 
-export function getSection(data: QuestionsData, sectionId: string): SectionData | undefined {
+export function getSection(
+  data: QuestionsData,
+  sectionId: string
+): SectionData | undefined {
   return data.sections[sectionId]
 }
 

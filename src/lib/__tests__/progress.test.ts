@@ -1,10 +1,10 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import {
-  getProgress,
-  saveProgress,
   clearProgress,
   getCompletedCount,
   getCorrectCount,
+  getProgress,
+  saveProgress,
 } from '../progress'
 
 describe('progress storage', () => {

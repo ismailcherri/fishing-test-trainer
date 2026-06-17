@@ -13,11 +13,13 @@
 ### Task 1: Add showAnswer mode to QuestionCard
 
 **Files:**
+
 - Modify: `src/components/QuestionCard.tsx`
 
 - [ ] **Step 1: Read current file, then add `showAnswer` prop**
 
 Add to the interface:
+
 ```tsx
 interface QuestionCardProps {
   question: Question
@@ -29,6 +31,7 @@ interface QuestionCardProps {
 ```
 
 Destructure (default false):
+
 ```tsx
 export function QuestionCard({ question, onAnswer, examMode = false, onAdvance, showAnswer = false }: QuestionCardProps) {
 ```
@@ -40,21 +43,24 @@ import { useState, useEffect } from 'react'
 ```
 
 Add after shuffleKeys state:
+
 ```tsx
-  useEffect(() => {
-    if (showAnswer) {
-      setSelectedKey(question.correctAnswer)
-    }
-  }, [question.number, showAnswer, question.correctAnswer])
+useEffect(() => {
+  if (showAnswer) {
+    setSelectedKey(question.correctAnswer)
+  }
+}, [question.number, showAnswer, question.correctAnswer])
 ```
 
 Update `getButtonStyle` to handle showAnswer mode (show green for correct without requiring click):
 The existing logic already handles this — when `selectedKey === question.correctAnswer`, it shows green. And since we set `selectedKey` to the correct answer via useEffect, it will show green.
 
 Update the feedback section condition:
+
 ```tsx
       {(selectedKey !== null && !examMode) && (
 ```
+
 Already correct — showAnswer sets selectedKey, examMode is false, so feedback shows.
 
 - [ ] **Step 2: Verify with TypeScript**
@@ -75,16 +81,19 @@ git commit -m "feat: add showAnswer prop to QuestionCard for study mode"
 ### Task 2: Rename Settings tab to Questions + update icon
 
 **Files:**
+
 - Modify: `src/components/BottomTabBar.tsx`
 
 - [ ] **Step 1: Read and modify BottomTabBar**
 
 Change the import:
+
 ```tsx
 import { GraduationCap, ClipboardCheck, BookOpen } from 'lucide-react'
 ```
 
 Replace the Settings tab definition with:
+
 ```tsx
   {
     to: '/questions',
@@ -106,6 +115,7 @@ git commit -m "feat: rename Settings tab to Questions with BookOpen icon"
 ### Task 3: Create Questions pages
 
 **Files:**
+
 - Remove: `src/routes/_layout/settings/` directory
 - Create: `src/routes/_layout/questions/index.tsx`
 - Create: `src/routes/_layout/questions/$sectionId.tsx`
@@ -157,7 +167,7 @@ function QuestionsIndex() {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold text-gray-900 mb-4">Study Questions</h1>
+      <h1 className="mb-4 text-xl font-bold text-gray-900">Study Questions</h1>
       <div className="flex flex-col gap-3">
         {Object.entries(data.sections).map(([id, section]) => (
           <SectionCard key={id} sectionId={id} section={section} />
@@ -204,7 +214,9 @@ function QuestionBrowse() {
       .finally(() => {
         if (!ignore) setLoading(false)
       })
-    return () => { ignore = true }
+    return () => {
+      ignore = true
+    }
   }, [sectionId])
 
   if (loading) {
@@ -219,7 +231,10 @@ function QuestionBrowse() {
     return (
       <div className="p-6 text-center">
         <p className="text-red-600">{error}</p>
-        <Link to="/questions" className="mt-4 inline-block text-blue-600 underline text-sm">
+        <Link
+          to="/questions"
+          className="mt-4 inline-block text-sm text-blue-600 underline"
+        >
           Back to questions
         </Link>
       </div>
@@ -230,7 +245,10 @@ function QuestionBrowse() {
     return (
       <div className="p-6 text-center text-gray-500">
         <p>No questions found.</p>
-        <Link to="/questions" className="mt-4 inline-block text-blue-600 underline text-sm">
+        <Link
+          to="/questions"
+          className="mt-4 inline-block text-sm text-blue-600 underline"
+        >
           Back to questions
         </Link>
       </div>
@@ -250,25 +268,25 @@ function QuestionBrowse() {
         onAnswer={() => {}}
         showAnswer
       />
-      <div className="flex gap-3 mt-4">
+      <div className="mt-4 flex gap-3">
         <button
           onClick={() => setCurrentIndex((i) => i - 1)}
           disabled={isFirst}
-          className="flex-1 bg-gray-200 text-gray-700 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 rounded-lg bg-gray-200 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-300 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Previous
         </button>
         {isLast ? (
           <Link
             to="/questions"
-            className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors text-center"
+            className="flex-1 rounded-lg bg-blue-600 py-3 text-center font-medium text-white transition-colors hover:bg-blue-700"
           >
             Done
           </Link>
         ) : (
           <button
             onClick={() => setCurrentIndex((i) => i + 1)}
-            className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+            className="flex-1 rounded-lg bg-blue-600 py-3 font-medium text-white transition-colors hover:bg-blue-700"
           >
             Next
           </button>
@@ -284,6 +302,7 @@ function QuestionBrowse() {
 ```bash
 npm run generate-routes && npx tsc --noEmit && npx vitest run && npm run build
 ```
+
 Expected: No errors, 18 tests pass, build succeeds
 
 - [ ] **Step 5: Commit**
@@ -298,6 +317,7 @@ git commit -m "feat: add Questions tab with section browse and study mode"
 ### Task 4: Integration verification and push
 
 **Files:**
+
 - None (verification only)
 
 - [ ] **Step 1: Final verification**
@@ -305,6 +325,7 @@ git commit -m "feat: add Questions tab with section browse and study mode"
 ```bash
 npx vitest run && npm run build
 ```
+
 Expected: 18 tests pass, build succeeds
 
 - [ ] **Step 2: Push**

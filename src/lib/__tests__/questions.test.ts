@@ -1,7 +1,6 @@
-import { describe, it, expect } from 'vitest'
-import { shuffleArray, getShuffledAnswerKeys, getSection } from '../questions'
-import type { SectionData } from '../questions'
-import type { Question } from '../questions'
+import { describe, expect, it } from 'vitest'
+import type { Question, SectionData } from '../questions'
+import { getSection, getShuffledAnswerKeys, shuffleArray } from '../questions'
 
 describe('shuffleArray', () => {
   it('returns an array of the same length', () => {
@@ -41,7 +40,9 @@ describe('getShuffledAnswerKeys', () => {
     expect(keys.sort()).toEqual(['A', 'B', 'C'])
 
     const results = new Set(
-      Array.from({ length: 20 }, () => getShuffledAnswerKeys(question).join(','))
+      Array.from({ length: 20 }, () =>
+        getShuffledAnswerKeys(question).join(',')
+      )
     )
     expect(results.size).toBeGreaterThan(1)
   })

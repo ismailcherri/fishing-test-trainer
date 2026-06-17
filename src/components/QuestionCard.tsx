@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
 import type { Question } from '#/lib/questions'
 import { getShuffledAnswerKeys } from '#/lib/questions'
+import { useEffect, useState } from 'react'
 
 interface QuestionCardProps {
   question: Question
@@ -10,9 +10,17 @@ interface QuestionCardProps {
   showAnswer?: boolean
 }
 
-export function QuestionCard({ question, onAnswer, examMode = false, onAdvance, showAnswer = false }: QuestionCardProps) {
+export function QuestionCard({
+  question,
+  onAnswer,
+  examMode = false,
+  onAdvance,
+  showAnswer = false,
+}: QuestionCardProps) {
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
-  const [shuffledKeys] = useState<string[]>(() => getShuffledAnswerKeys(question))
+  const [shuffledKeys] = useState<string[]>(() =>
+    getShuffledAnswerKeys(question)
+  )
 
   useEffect(() => {
     if (showAnswer) {
@@ -50,26 +58,30 @@ export function QuestionCard({ question, onAnswer, examMode = false, onAdvance, 
 
   return (
     <div>
-      <p className="text-lg font-medium text-gray-900 mb-4">{question.question}</p>
+      <p className="mb-4 text-lg font-medium text-gray-900">
+        {question.question}
+      </p>
 
-      <div className="flex flex-col gap-2 mb-4">
+      <div className="mb-4 flex flex-col gap-2">
         {shuffledKeys.map((key, index) => (
           <button
             key={key}
             onClick={() => handleSelect(key)}
             disabled={selectedKey !== null}
-            className={`border-2 rounded-lg p-3 text-left transition-colors ${getButtonStyle(key)}`}
+            className={`rounded-lg border-2 p-3 text-left transition-colors ${getButtonStyle(key)}`}
           >
-            <span className="font-semibold mr-2">{answerLabels[index]}</span>
+            <span className="mr-2 font-semibold">{answerLabels[index]}</span>
             {question.answers[key]}
           </button>
         ))}
       </div>
 
       {selectedKey !== null && !examMode && (
-        <div className="bg-gray-100 rounded-lg p-4 mt-4">
+        <div className="mt-4 rounded-lg bg-gray-100 p-4">
           <div className="mb-3">
-            <p className="text-sm font-medium text-gray-500 uppercase mb-1">English</p>
+            <p className="mb-1 text-sm font-medium text-gray-500 uppercase">
+              English
+            </p>
             <p className="text-gray-800">{question.questionEn}</p>
             <div className="mt-2 flex flex-col gap-1">
               {shuffledKeys.map((key, index) => (
@@ -81,8 +93,10 @@ export function QuestionCard({ question, onAnswer, examMode = false, onAdvance, 
             </div>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-500 uppercase mb-1">Explanation</p>
-            <p className="text-gray-700 text-sm">{question.explanation}</p>
+            <p className="mb-1 text-sm font-medium text-gray-500 uppercase">
+              Explanation
+            </p>
+            <p className="text-sm text-gray-700">{question.explanation}</p>
           </div>
         </div>
       )}

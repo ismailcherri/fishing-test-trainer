@@ -1,6 +1,6 @@
-import { Link } from '@tanstack/react-router'
 import { getCompletedCount, getCorrectCount } from '#/lib/progress'
 import type { SectionData } from '#/lib/questions'
+import { Link } from '@tanstack/react-router'
 
 interface SectionCardProps {
   sectionId: string
@@ -8,30 +8,37 @@ interface SectionCardProps {
   to?: string
 }
 
-export function SectionCard({ sectionId, section, to = '/train/$sectionId' }: SectionCardProps) {
+export function SectionCard({
+  sectionId,
+  section,
+  to = '/train/$sectionId',
+}: SectionCardProps) {
   const completed = getCompletedCount(sectionId)
   const correct = getCorrectCount(sectionId)
   const total = section.questionCount
-  const progressPercent = total > 0 ? Math.min(Math.round((completed / total) * 100), 100) : 0
+  const progressPercent =
+    total > 0 ? Math.min(Math.round((completed / total) * 100), 100) : 0
 
   return (
     <Link
       to={to}
       params={{ sectionId }}
-      className="block bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow"
+      className="block rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
     >
-      <div className="flex justify-between items-start mb-2">
+      <div className="mb-2 flex items-start justify-between">
         <h2 className="font-semibold text-gray-900">{section.name}</h2>
-        <span className="text-sm text-gray-500">{completed}/{total}</span>
+        <span className="text-sm text-gray-500">
+          {completed}/{total}
+        </span>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2 mb-1">
+      <div className="mb-1 h-2 w-full rounded-full bg-gray-200">
         <div
-          className="bg-blue-600 h-2 rounded-full transition-all"
+          className="h-2 rounded-full bg-blue-600 transition-all"
           style={{ width: `${progressPercent}%` }}
         />
       </div>
       {completed > 0 && (
-        <p className="text-xs text-gray-500 mt-1">
+        <p className="mt-1 text-xs text-gray-500">
           {correct} correct ({Math.round((correct / completed) * 100) || 0}%)
         </p>
       )}

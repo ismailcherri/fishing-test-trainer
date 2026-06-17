@@ -1,7 +1,9 @@
 <!-- intent-skills:start -->
+
 ## Skill Loading
 
 Before substantial work:
+
 - Skill check: run `npx @tanstack/intent@latest list`, or use skills already listed in context.
 - Skill guidance: if one local skill clearly matches the task, run `npx @tanstack/intent@latest load <package>#<skill>` and follow the returned `SKILL.md`.
 - Monorepos: when working across packages, run the skill check from the workspace root and prefer the local skill for the package being changed.
@@ -18,16 +20,16 @@ Before substantial work:
 
 ## Stack
 
-| Concern        | Choice                        |
-|----------------|-------------------------------|
-| Framework      | React 19.2                    |
-| Router         | TanStack Router (file-based)  |
-| Start          | TanStack Start (SSR)          |
-| Styling        | Tailwind CSS v4               |
-| Bundler        | Vite 8                        |
-| Toolchain      | Default (Vitest, no Biome/Eslint) |
-| Package manager| npm                           |
-| TypeScript     | ^6.0.2 (strict mode)          |
+| Concern         | Choice                            |
+| --------------- | --------------------------------- |
+| Framework       | React 19.2                        |
+| Router          | TanStack Router (file-based)      |
+| Start           | TanStack Start (SSR)              |
+| Styling         | Tailwind CSS v4                   |
+| Bundler         | Vite 8                            |
+| Toolchain       | Default (Vitest, no Biome/Eslint) |
+| Package manager | npm                               |
+| TypeScript      | ^6.0.2 (strict mode)              |
 
 ## Key Dependencies
 
@@ -54,11 +56,11 @@ tsconfig.json         - ES2022, bundler resolution, strict, path aliases (#/*, @
 
 ## Scripts
 
-- `npm run dev`          - Vite dev server on port 3000
-- `npm run build`        - Production build
-- `npm run preview`      - Preview production build
+- `npm run dev` - Vite dev server on port 3000
+- `npm run build` - Production build
+- `npm run preview` - Preview production build
 - `npm run generate-routes` - Regenerate route tree
-- `npm run test`         - Vitest
+- `npm run test` - Vitest
 
 ## Environment Variables
 
@@ -78,6 +80,7 @@ Default Nitro preset (Node.js). Can be changed via `--deployment` flag (cloudfla
 ## TanStack Intent Skills Available
 
 Run `npx @tanstack/intent@latest list` to view current skills. Key skills:
+
 - `@tanstack/react-start#react-start` — React bindings, createStart, StartClient, StartServer
 - `@tanstack/router-core#router-core` — Route trees, file-based routing conventions
 - `@tanstack/router-core#data-loading` — Loaders, staleTime, caching

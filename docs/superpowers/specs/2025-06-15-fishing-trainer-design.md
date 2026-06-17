@@ -9,6 +9,7 @@ Mobile-like SPA/PWA for training on the Brandenburg fishing license exam questio
 ## Data Source
 
 `public/questions.json` — 597 questions across 5 sections:
+
 - I: Fischkunde und -hege (120 questions)
 - II: Pflege der Fischgewässer (120 questions)
 - III: Fanggeräte und deren Gebrauch (120 questions)

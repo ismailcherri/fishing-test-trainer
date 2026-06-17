@@ -12,28 +12,29 @@
 
 ### File Map
 
-| File | Purpose |
-|------|---------|
-| `src/lib/questions.ts` | Types + question loading + shuffle utility |
-| `src/lib/progress.ts` | localStorage read/write/clear for per-section progress |
-| `src/components/BottomTabBar.tsx` | 3-tab bottom nav bar |
-| `src/components/SectionCard.tsx` | Section card with name, count, progress |
-| `src/components/QuestionCard.tsx` | Question text, shuffled answer buttons, feedback display |
-| `src/components/ProgressBar.tsx` | Question X of Y indicator |
-| `src/routes/_layout.tsx` | Pathless layout: tab bar + `<Outlet />` |
-| `src/routes/index.tsx` | **Modify** — Section list (Train tab content) |
-| `src/routes/train/$sectionId.tsx` | Active question session |
-| `src/routes/test/index.tsx` | Placeholder |
-| `src/routes/settings/index.tsx` | Placeholder |
-| `src/routes/__root.tsx` | **Modify** — Update page title |
-| `src/lib/__tests__/questions.test.ts` | Tests for question loading and shuffling |
-| `src/lib/__tests__/progress.test.ts` | Tests for progress storage |
+| File                                  | Purpose                                                  |
+| ------------------------------------- | -------------------------------------------------------- |
+| `src/lib/questions.ts`                | Types + question loading + shuffle utility               |
+| `src/lib/progress.ts`                 | localStorage read/write/clear for per-section progress   |
+| `src/components/BottomTabBar.tsx`     | 3-tab bottom nav bar                                     |
+| `src/components/SectionCard.tsx`      | Section card with name, count, progress                  |
+| `src/components/QuestionCard.tsx`     | Question text, shuffled answer buttons, feedback display |
+| `src/components/ProgressBar.tsx`      | Question X of Y indicator                                |
+| `src/routes/_layout.tsx`              | Pathless layout: tab bar + `<Outlet />`                  |
+| `src/routes/index.tsx`                | **Modify** — Section list (Train tab content)            |
+| `src/routes/train/$sectionId.tsx`     | Active question session                                  |
+| `src/routes/test/index.tsx`           | Placeholder                                              |
+| `src/routes/settings/index.tsx`       | Placeholder                                              |
+| `src/routes/__root.tsx`               | **Modify** — Update page title                           |
+| `src/lib/__tests__/questions.test.ts` | Tests for question loading and shuffling                 |
+| `src/lib/__tests__/progress.test.ts`  | Tests for progress storage                               |
 
 ---
 
 ### Task 1: Types and question utilities
 
 **Files:**
+
 - Create: `src/lib/questions.ts`
 - Create: `src/lib/__tests__/questions.test.ts`
 
@@ -76,7 +77,10 @@ export async function loadQuestions(): Promise<QuestionsData> {
   return cachedData!
 }
 
-export function getSection(data: QuestionsData, sectionId: string): SectionData | undefined {
+export function getSection(
+  data: QuestionsData,
+  sectionId: string
+): SectionData | undefined {
   return data.sections[sectionId]
 }
 
@@ -158,6 +162,7 @@ git commit -m "feat: add question types, loading, and shuffle utilities"
 ### Task 2: Progress storage
 
 **Files:**
+
 - Create: `src/lib/progress.ts`
 - Create: `src/lib/__tests__/progress.test.ts`
 
@@ -181,7 +186,7 @@ export function getProgress(sectionId: string): ProgressEntry[] {
     if (!Array.isArray(parsed)) return []
     return parsed.filter(
       (e): e is ProgressEntry =>
-        typeof e.questionNumber === 'number' && typeof e.correct === 'boolean',
+        typeof e.questionNumber === 'number' && typeof e.correct === 'boolean'
     )
   } catch {
     return []
@@ -191,10 +196,12 @@ export function getProgress(sectionId: string): ProgressEntry[] {
 export function saveProgress(
   sectionId: string,
   questionNumber: number,
-  correct: boolean,
+  correct: boolean
 ): void {
   const progress = getProgress(sectionId)
-  const existing = progress.findIndex((p) => p.questionNumber === questionNumber)
+  const existing = progress.findIndex(
+    (p) => p.questionNumber === questionNumber
+  )
   if (existing !== -1) {
     progress[existing] = { questionNumber, correct }
   } else {
@@ -299,6 +306,7 @@ git commit -m "feat: add localStorage progress storage utilities"
 ### Task 3: BottomTabBar component
 
 **Files:**
+
 - Create: `src/components/BottomTabBar.tsx`
 
 - [ ] **Step 1: Write the file `src/components/BottomTabBar.tsx`**
@@ -318,19 +326,19 @@ const tabs: Tab[] = [
   {
     to: '/',
     label: 'Train',
-    icon: <GraduationCap className="w-5 h-5" />,
+    icon: <GraduationCap className="h-5 w-5" />,
     isActive: (pathname) => pathname === '/' || pathname.startsWith('/train'),
   },
   {
     to: '/test',
     label: 'Test',
-    icon: <ClipboardCheck className="w-5 h-5" />,
+    icon: <ClipboardCheck className="h-5 w-5" />,
     isActive: (pathname) => pathname.startsWith('/test'),
   },
   {
     to: '/settings',
     label: 'Settings',
-    icon: <Settings className="w-5 h-5" />,
+    icon: <Settings className="h-5 w-5" />,
     isActive: (pathname) => pathname.startsWith('/settings'),
   },
 ]
@@ -339,18 +347,16 @@ export function BottomTabBar() {
   const pathname = window.location.pathname
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 border-t border-gray-200 bg-white z-50">
-      <div className="max-w-md mx-auto flex justify-around">
+    <nav className="fixed right-0 bottom-0 left-0 z-50 border-t border-gray-200 bg-white">
+      <div className="mx-auto flex max-w-md justify-around">
         {tabs.map((tab) => {
           const active = tab.isActive(pathname)
           return (
             <Link
               key={tab.to}
               to={tab.to}
-              className={`flex flex-col items-center py-2 px-3 text-xs transition-colors ${
-                active
-                  ? 'text-blue-600'
-                  : 'text-gray-500 hover:text-gray-700'
+              className={`flex flex-col items-center px-3 py-2 text-xs transition-colors ${
+                active ? 'text-blue-600' : 'text-gray-500 hover:text-gray-700'
               }`}
             >
               {tab.icon}
@@ -376,6 +382,7 @@ git commit -m "feat: add BottomTabBar component with Train/Test/Settings tabs"
 ### Task 4: Pathless layout route
 
 **Files:**
+
 - Create: `src/routes/_layout.tsx`
 
 - [ ] **Step 1: Write the file `src/routes/_layout.tsx`**
@@ -390,7 +397,7 @@ export const Route = createFileRoute('/_layout')({
 
 function LayoutComponent() {
   return (
-    <div className="max-w-md mx-auto min-h-screen bg-gray-50">
+    <div className="mx-auto min-h-screen max-w-md bg-gray-50">
       <div className="pb-16">
         <Outlet />
       </div>
@@ -412,6 +419,7 @@ git commit -m "feat: add pathless layout route with bottom tab bar wrapper"
 ### Task 5: SectionList page (modify index route as train tab)
 
 **Files:**
+
 - Modify: `src/routes/index.tsx`
 - Create: `src/components/SectionCard.tsx`
 
@@ -437,20 +445,22 @@ export function SectionCard({ sectionId, section }: SectionCardProps) {
     <Link
       to="/train/$sectionId"
       params={{ sectionId }}
-      className="block bg-white rounded-lg shadow-sm border border-gray-200 p-4 hover:shadow-md transition-shadow"
+      className="block rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
     >
-      <div className="flex justify-between items-start mb-2">
+      <div className="mb-2 flex items-start justify-between">
         <h2 className="font-semibold text-gray-900">{section.name}</h2>
-        <span className="text-sm text-gray-500">{completed}/{total}</span>
+        <span className="text-sm text-gray-500">
+          {completed}/{total}
+        </span>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2 mb-1">
+      <div className="mb-1 h-2 w-full rounded-full bg-gray-200">
         <div
-          className="bg-blue-600 h-2 rounded-full transition-all"
+          className="h-2 rounded-full bg-blue-600 transition-all"
           style={{ width: `${progressPercent}%` }}
         />
       </div>
       {completed > 0 && (
-        <p className="text-xs text-gray-500 mt-1">
+        <p className="mt-1 text-xs text-gray-500">
           {correct} correct ({Math.round((correct / completed) * 100) || 0}%)
         </p>
       )}
@@ -480,17 +490,19 @@ function Home() {
   useEffect(() => {
     loadQuestions()
       .then(setData)
-      .catch((e) => setError(e instanceof Error ? e.message : 'Failed to load questions'))
+      .catch((e) =>
+        setError(e instanceof Error ? e.message : 'Failed to load questions')
+      )
   }, [])
 
   if (error) {
     return (
       <div className="p-6 text-center">
-        <p className="text-red-600 mb-2">Failed to load questions</p>
+        <p className="mb-2 text-red-600">Failed to load questions</p>
         <p className="text-sm text-gray-500">{error}</p>
         <button
           onClick={() => window.location.reload()}
-          className="mt-4 text-blue-600 underline text-sm"
+          className="mt-4 text-sm text-blue-600 underline"
         >
           Reload
         </button>
@@ -508,7 +520,9 @@ function Home() {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold text-gray-900 mb-4">Fishing License Trainer</h1>
+      <h1 className="mb-4 text-xl font-bold text-gray-900">
+        Fishing License Trainer
+      </h1>
       <div className="flex flex-col gap-3">
         {Object.entries(data.sections).map(([id, section]) => (
           <SectionCard key={id} sectionId={id} section={section} />
@@ -536,6 +550,7 @@ git commit -m "feat: add section list page with progress cards"
 ### Task 6: ProgressBar component
 
 **Files:**
+
 - Create: `src/components/ProgressBar.tsx`
 
 - [ ] **Step 1: Write the file `src/components/ProgressBar.tsx`**
@@ -551,15 +566,15 @@ export function ProgressBar({ current, total }: ProgressBarProps) {
 
   return (
     <div className="mb-4">
-      <div className="flex justify-between items-center mb-1">
+      <div className="mb-1 flex items-center justify-between">
         <span className="text-sm font-medium text-gray-700">
           Question {current} / {total}
         </span>
         <span className="text-sm text-gray-500">{percent}%</span>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2">
+      <div className="h-2 w-full rounded-full bg-gray-200">
         <div
-          className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+          className="h-2 rounded-full bg-blue-600 transition-all duration-300"
           style={{ width: `${percent}%` }}
         />
       </div>
@@ -580,6 +595,7 @@ git commit -m "feat: add ProgressBar component"
 ### Task 7: QuestionCard component (question display + answer buttons + feedback)
 
 **Files:**
+
 - Create: `src/components/QuestionCard.tsx`
 
 - [ ] **Step 1: Write the file `src/components/QuestionCard.tsx`**
@@ -596,7 +612,9 @@ interface QuestionCardProps {
 
 export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
-  const [shuffledKeys] = useState<string[]>(() => getShuffledAnswerKeys(question))
+  const [shuffledKeys] = useState<string[]>(() =>
+    getShuffledAnswerKeys(question)
+  )
 
   const handleSelect = (key: string) => {
     if (selectedKey !== null) return
@@ -621,26 +639,30 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
 
   return (
     <div>
-      <p className="text-lg font-medium text-gray-900 mb-4">{question.question}</p>
+      <p className="mb-4 text-lg font-medium text-gray-900">
+        {question.question}
+      </p>
 
-      <div className="flex flex-col gap-2 mb-4">
+      <div className="mb-4 flex flex-col gap-2">
         {shuffledKeys.map((key, index) => (
           <button
             key={key}
             onClick={() => handleSelect(key)}
             disabled={selectedKey !== null}
-            className={`border-2 rounded-lg p-3 text-left transition-colors ${getButtonStyle(key)}`}
+            className={`rounded-lg border-2 p-3 text-left transition-colors ${getButtonStyle(key)}`}
           >
-            <span className="font-semibold mr-2">{answerLabels[index]}</span>
+            <span className="mr-2 font-semibold">{answerLabels[index]}</span>
             {question.answers[key]}
           </button>
         ))}
       </div>
 
       {selectedKey !== null && (
-        <div className="bg-gray-100 rounded-lg p-4 mt-4">
+        <div className="mt-4 rounded-lg bg-gray-100 p-4">
           <div className="mb-3">
-            <p className="text-sm font-medium text-gray-500 uppercase mb-1">English</p>
+            <p className="mb-1 text-sm font-medium text-gray-500 uppercase">
+              English
+            </p>
             <p className="text-gray-800">{question.questionEn}</p>
             <div className="mt-2 flex flex-col gap-1">
               {shuffledKeys.map((key, index) => (
@@ -652,8 +674,10 @@ export function QuestionCard({ question, onAnswer }: QuestionCardProps) {
             </div>
           </div>
           <div>
-            <p className="text-sm font-medium text-gray-500 uppercase mb-1">Explanation</p>
-            <p className="text-gray-700 text-sm">{question.explanation}</p>
+            <p className="mb-1 text-sm font-medium text-gray-500 uppercase">
+              Explanation
+            </p>
+            <p className="text-sm text-gray-700">{question.explanation}</p>
           </div>
         </div>
       )}
@@ -674,6 +698,7 @@ git commit -m "feat: add QuestionCard with shuffled answers and feedback display
 ### Task 8: Question session page
 
 **Files:**
+
 - Create: `src/routes/train/$sectionId.tsx`
 
 - [ ] **Step 1: Write the file `src/routes/train/$sectionId.tsx`**
@@ -711,7 +736,7 @@ function QuestionSession() {
 
         const progress = getProgress(sectionId)
         const firstUnanswered = section.questions.findIndex(
-          (q) => !progress.some((p) => p.questionNumber === q.number),
+          (q) => !progress.some((p) => p.questionNumber === q.number)
         )
         if (firstUnanswered === -1) {
           setSectionComplete(true)
@@ -731,7 +756,7 @@ function QuestionSession() {
       saveProgress(sectionId, question.number, correct)
       setAnswered(true)
     },
-    [questions, currentIndex, sectionId],
+    [questions, currentIndex, sectionId]
   )
 
   const handleNext = () => {
@@ -762,7 +787,10 @@ function QuestionSession() {
     return (
       <div className="p-6 text-center">
         <p className="text-red-600">{error}</p>
-        <Link to="/" className="mt-4 inline-block text-blue-600 underline text-sm">
+        <Link
+          to="/"
+          className="mt-4 inline-block text-sm text-blue-600 underline"
+        >
           Back to sections
         </Link>
       </div>
@@ -776,18 +804,20 @@ function QuestionSession() {
 
     return (
       <div className="p-6 text-center">
-        <h2 className="text-xl font-bold text-gray-900 mb-2">Section Complete!</h2>
-        <p className="text-gray-600 mb-4">
+        <h2 className="mb-2 text-xl font-bold text-gray-900">
+          Section Complete!
+        </h2>
+        <p className="mb-4 text-gray-600">
           {correct} / {total} correct ({Math.round((correct / total) * 100)}%)
         </p>
         <div className="flex flex-col gap-3">
           <button
             onClick={handleRestart}
-            className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors"
+            className="rounded-lg bg-blue-600 px-6 py-2 text-white transition-colors hover:bg-blue-700"
           >
             Restart Section
           </button>
-          <Link to="/" className="text-blue-600 underline text-sm">
+          <Link to="/" className="text-sm text-blue-600 underline">
             Back to sections
           </Link>
         </div>
@@ -800,7 +830,10 @@ function QuestionSession() {
     return (
       <div className="p-6 text-center text-gray-500">
         <p>No question found.</p>
-        <Link to="/" className="mt-4 inline-block text-blue-600 underline text-sm">
+        <Link
+          to="/"
+          className="mt-4 inline-block text-sm text-blue-600 underline"
+        >
           Back to sections
         </Link>
       </div>
@@ -814,7 +847,7 @@ function QuestionSession() {
       {answered && (
         <button
           onClick={handleNext}
-          className="mt-4 w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          className="mt-4 w-full rounded-lg bg-blue-600 py-3 font-medium text-white transition-colors hover:bg-blue-700"
         >
           Next
         </button>
@@ -841,6 +874,7 @@ git commit -m "feat: add question session page with sequential training flow"
 ### Task 9: Test and Settings placeholder pages
 
 **Files:**
+
 - Create: `src/routes/test/index.tsx`
 - Create: `src/routes/settings/index.tsx`
 
@@ -856,7 +890,7 @@ export const Route = createFileRoute('/test/')({
 function TestPage() {
   return (
     <div className="p-6 text-center">
-      <h1 className="text-xl font-bold text-gray-900 mb-2">Test Mode</h1>
+      <h1 className="mb-2 text-xl font-bold text-gray-900">Test Mode</h1>
       <p className="text-gray-500">Coming soon</p>
     </div>
   )
@@ -875,7 +909,7 @@ export const Route = createFileRoute('/settings/')({
 function SettingsPage() {
   return (
     <div className="p-6 text-center">
-      <h1 className="text-xl font-bold text-gray-900 mb-2">Settings</h1>
+      <h1 className="mb-2 text-xl font-bold text-gray-900">Settings</h1>
       <p className="text-gray-500">Coming soon</p>
     </div>
   )
@@ -894,15 +928,19 @@ git commit -m "feat: add placeholder pages for Test and Settings tabs"
 ### Task 10: Update root HTML title
 
 **Files:**
+
 - Modify: `src/routes/__root.tsx`
 
 - [ ] **Step 1: Update the title in `src/routes/__root.tsx`**
 
 Change line 18 from:
+
 ```tsx
 title: 'TanStack Start Starter',
 ```
+
 To:
+
 ```tsx
 title: 'Fishing License Trainer',
 ```
@@ -919,6 +957,7 @@ git commit -m "chore: update page title to Fishing License Trainer"
 ### Task 11: Generate routes and integration test
 
 **Files:**
+
 - Regenerate: `src/routeTree.gen.ts`
 
 - [ ] **Step 1: Generate routes**

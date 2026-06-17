@@ -1,7 +1,7 @@
+import { SectionCard } from '#/components/SectionCard'
+import { loadQuestions, type QuestionsData } from '#/lib/questions'
 import { createFileRoute } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { loadQuestions, type QuestionsData } from '#/lib/questions'
-import { SectionCard } from '#/components/SectionCard'
 
 export const Route = createFileRoute('/_layout/')({
   component: Home,
@@ -14,17 +14,19 @@ function Home() {
   useEffect(() => {
     loadQuestions()
       .then(setData)
-      .catch((e) => setError(e instanceof Error ? e.message : 'Failed to load questions'))
+      .catch((e) =>
+        setError(e instanceof Error ? e.message : 'Failed to load questions')
+      )
   }, [])
 
   if (error) {
     return (
       <div className="p-6 text-center">
-        <p className="text-red-600 mb-2">Failed to load questions</p>
+        <p className="mb-2 text-red-600">Failed to load questions</p>
         <p className="text-sm text-gray-500">{error}</p>
         <button
           onClick={() => window.location.reload()}
-          className="mt-4 text-blue-600 underline text-sm"
+          className="mt-4 text-sm text-blue-600 underline"
         >
           Reload
         </button>
@@ -42,9 +44,11 @@ function Home() {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold text-gray-900 mb-4">Fishing License Trainer</h1>
+      <h1 className="mb-4 text-xl font-bold text-gray-900">
+        Fishing License Trainer
+      </h1>
       {Object.keys(data.sections).length === 0 ? (
-        <p className="text-gray-500 text-center">No sections available.</p>
+        <p className="text-center text-gray-500">No sections available.</p>
       ) : (
         <div className="flex flex-col gap-3">
           {Object.entries(data.sections).map(([id, section]) => (
