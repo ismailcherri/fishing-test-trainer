@@ -18,7 +18,7 @@ export function getStats(sectionId: string): QuestionStats[] {
       (e): e is QuestionStats =>
         typeof e.questionNumber === 'number' &&
         typeof e.correct === 'number' &&
-        typeof e.wrong === 'number',
+        typeof e.wrong === 'number'
     )
   } catch {
     return []
@@ -28,7 +28,7 @@ export function getStats(sectionId: string): QuestionStats[] {
 export function recordAnswer(
   sectionId: string,
   questionNumber: number,
-  correct: boolean,
+  correct: boolean
 ): void {
   const stats = getStats(sectionId)
   const existing = stats.find((s) => s.questionNumber === questionNumber)
@@ -36,7 +36,11 @@ export function recordAnswer(
     if (correct) existing.correct++
     else existing.wrong++
   } else {
-    stats.push({ questionNumber, correct: correct ? 1 : 0, wrong: correct ? 0 : 1 })
+    stats.push({
+      questionNumber,
+      correct: correct ? 1 : 0,
+      wrong: correct ? 0 : 1,
+    })
   }
   localStorage.setItem(getKey(sectionId), JSON.stringify(stats))
 }
@@ -53,7 +57,10 @@ export function getMemorizedCount(sectionId: string): number {
   return getStats(sectionId).filter(isMemorized).length
 }
 
-export function getTotalAttempts(sectionId: string): { correct: number; wrong: number } {
+export function getTotalAttempts(sectionId: string): {
+  correct: number
+  wrong: number
+} {
   const stats = getStats(sectionId)
   return {
     correct: stats.reduce((sum, s) => sum + s.correct, 0),

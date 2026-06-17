@@ -1,5 +1,10 @@
 import { Link, useRouterState } from '@tanstack/react-router'
-import { BookOpen, ClipboardCheck, GraduationCap, BarChart3 } from 'lucide-react'
+import {
+  BarChart3,
+  BookOpen,
+  ClipboardCheck,
+  GraduationCap,
+} from 'lucide-react'
 
 interface Tab {
   to: string
@@ -30,7 +35,7 @@ const tabs: Tab[] = [
   {
     to: '/summary',
     label: 'Summary',
-    icon: <BarChart3 className="w-5 h-5" />,
+    icon: <BarChart3 className="h-5 w-5" />,
     isActive: (pathname) => pathname.startsWith('/summary'),
   },
 ]

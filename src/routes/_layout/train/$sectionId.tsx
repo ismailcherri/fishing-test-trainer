@@ -1,7 +1,7 @@
 import { ProgressBar } from '#/components/ProgressBar'
 import { QuestionCard } from '#/components/QuestionCard'
-import { clearStats, getStats, isMemorized, recordAnswer } from '#/lib/stats'
 import { getSection, loadQuestions, type Question } from '#/lib/questions'
+import { clearStats, getStats, isMemorized, recordAnswer } from '#/lib/stats'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useCallback, useEffect, useState } from 'react'
 

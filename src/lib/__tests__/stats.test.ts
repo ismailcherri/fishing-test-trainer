@@ -1,5 +1,12 @@
-import { describe, it, expect, beforeEach } from 'vitest'
-import { getStats, recordAnswer, clearStats, isMemorized, getMemorizedCount, getConfidenceRatio } from '../stats'
+import { beforeEach, describe, expect, it } from 'vitest'
+import {
+  clearStats,
+  getConfidenceRatio,
+  getMemorizedCount,
+  getStats,
+  isMemorized,
+  recordAnswer,
+} from '../stats'
 
 describe('stats storage', () => {
   beforeEach(() => localStorage.clear())
@@ -30,8 +37,10 @@ describe('stats storage', () => {
   })
 
   it('getMemorizedCount returns count of memorized questions', () => {
-    recordAnswer('section-I', 1, true); recordAnswer('section-I', 1, true)
-    recordAnswer('section-I', 1, true); recordAnswer('section-I', 1, true)
+    recordAnswer('section-I', 1, true)
+    recordAnswer('section-I', 1, true)
+    recordAnswer('section-I', 1, true)
+    recordAnswer('section-I', 1, true)
     recordAnswer('section-I', 2, false)
     expect(getMemorizedCount('section-I')).toBe(1)
   })

@@ -1,7 +1,11 @@
+import { loadQuestions, type QuestionsData } from '#/lib/questions'
+import {
+  getConfidenceRatio,
+  getMemorizedCount,
+  getTotalAttempts,
+} from '#/lib/stats'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { loadQuestions, type QuestionsData } from '#/lib/questions'
-import { getMemorizedCount, getConfidenceRatio, getTotalAttempts } from '#/lib/stats'
 
 export const Route = createFileRoute('/_layout/summary/')({
   component: SummaryIndex,
@@ -35,7 +39,7 @@ function SummaryIndex() {
 
   return (
     <div className="p-4">
-      <h1 className="text-xl font-bold text-gray-900 mb-4">Statistics</h1>
+      <h1 className="mb-4 text-xl font-bold text-gray-900">Statistics</h1>
       <div className="flex flex-col gap-3">
         {Object.entries(data.sections).map(([id, section]) => {
           const memorized = getMemorizedCount(id)
@@ -48,20 +52,27 @@ function SummaryIndex() {
               key={id}
               to="/summary/$sectionId"
               params={{ sectionId: id }}
-              className="block bg-white rounded-lg shadow-sm border border-gray-200 p-4 text-left hover:shadow-md transition-shadow"
+              className="block rounded-lg border border-gray-200 bg-white p-4 text-left shadow-sm transition-shadow hover:shadow-md"
             >
-              <h2 className="font-semibold text-gray-900 mb-2">{section.name}</h2>
-              <div className="flex gap-4 text-sm text-gray-600 mb-2">
-                <span>{memorized}/{total} memorized</span>
+              <h2 className="mb-2 font-semibold text-gray-900">
+                {section.name}
+              </h2>
+              <div className="mb-2 flex gap-4 text-sm text-gray-600">
+                <span>
+                  {memorized}/{total} memorized
+                </span>
                 <span>{confidence}% confidence</span>
               </div>
-              <div className="text-xs text-gray-500 mb-2">
-                {correct} correct, {wrong} wrong ({correct + wrong} total attempts)
+              <div className="mb-2 text-xs text-gray-500">
+                {correct} correct, {wrong} wrong ({correct + wrong} total
+                attempts)
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className="h-2 w-full rounded-full bg-gray-200">
                 <div
-                  className="bg-green-600 h-2 rounded-full transition-all"
-                  style={{ width: `${total > 0 ? Math.min(Math.round((memorized / total) * 100), 100) : 0}%` }}
+                  className="h-2 rounded-full bg-green-600 transition-all"
+                  style={{
+                    width: `${total > 0 ? Math.min(Math.round((memorized / total) * 100), 100) : 0}%`,
+                  }}
                 />
               </div>
             </Link>

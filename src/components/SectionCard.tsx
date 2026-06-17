@@ -1,5 +1,5 @@
-import { getMemorizedCount, getStats } from '#/lib/stats'
 import type { SectionData } from '#/lib/questions'
+import { getMemorizedCount, getStats } from '#/lib/stats'
 import { Link } from '@tanstack/react-router'
 
 interface SectionCardProps {
@@ -38,9 +38,7 @@ export function SectionCard({
         />
       </div>
       {attempted > 0 && (
-        <p className="mt-1 text-xs text-gray-500">
-          {memorized} memorized
-        </p>
+        <p className="mt-1 text-xs text-gray-500">{memorized} memorized</p>
       )}
     </Link>
   )

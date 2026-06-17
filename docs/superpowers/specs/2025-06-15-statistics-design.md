@@ -53,14 +53,14 @@ Add 4th tab: **Summary** with `BarChart3` icon, link `/summary`.
 
 ## Files
 
-| File | Action |
-|------|--------|
-| `src/lib/stats.ts` | Create — types + save/load stats, memorize logic |
-| `src/lib/__tests__/stats.test.ts` | Create — tests |
-| `src/lib/progress.ts` | Remove — replaced by stats |
-| `src/lib/__tests__/progress.test.ts` | Remove — replaced |
-| `src/components/SectionCard.tsx` | Modify — show memorized stats |
-| `src/components/BottomTabBar.tsx` | Modify — add Summary tab |
-| `src/routes/_layout/train/$sectionId.tsx` | Modify — use saveStats |
-| `src/routes/_layout/summary/index.tsx` | Create — summary section list |
-| `src/routes/_layout/summary/$sectionId.tsx` | Create — per-question details |
+| File                                        | Action                                           |
+| ------------------------------------------- | ------------------------------------------------ |
+| `src/lib/stats.ts`                          | Create — types + save/load stats, memorize logic |
+| `src/lib/__tests__/stats.test.ts`           | Create — tests                                   |
+| `src/lib/progress.ts`                       | Remove — replaced by stats                       |
+| `src/lib/__tests__/progress.test.ts`        | Remove — replaced                                |
+| `src/components/SectionCard.tsx`            | Modify — show memorized stats                    |
+| `src/components/BottomTabBar.tsx`           | Modify — add Summary tab                         |
+| `src/routes/_layout/train/$sectionId.tsx`   | Modify — use saveStats                           |
+| `src/routes/_layout/summary/index.tsx`      | Create — summary section list                    |
+| `src/routes/_layout/summary/$sectionId.tsx` | Create — per-question details                    |
