@@ -13,6 +13,7 @@ import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutTestIndexRouteImport } from './routes/_layout/test/index'
 import { Route as LayoutSummaryIndexRouteImport } from './routes/_layout/summary/index'
+import { Route as LayoutSettingsIndexRouteImport } from './routes/_layout/settings/index'
 import { Route as LayoutQuestionsIndexRouteImport } from './routes/_layout/questions/index'
 import { Route as LayoutTrainSectionIdRouteImport } from './routes/_layout/train/$sectionId'
 import { Route as LayoutSummarySectionIdRouteImport } from './routes/_layout/summary/$sectionId'
@@ -35,6 +36,11 @@ const LayoutTestIndexRoute = LayoutTestIndexRouteImport.update({
 const LayoutSummaryIndexRoute = LayoutSummaryIndexRouteImport.update({
   id: '/summary/',
   path: '/summary/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutSettingsIndexRoute = LayoutSettingsIndexRouteImport.update({
+  id: '/settings/',
+  path: '/settings/',
   getParentRoute: () => LayoutRoute,
 } as any)
 const LayoutQuestionsIndexRoute = LayoutQuestionsIndexRouteImport.update({
@@ -65,6 +71,7 @@ export interface FileRoutesByFullPath {
   '/summary/$sectionId': typeof LayoutSummarySectionIdRoute
   '/train/$sectionId': typeof LayoutTrainSectionIdRoute
   '/questions/': typeof LayoutQuestionsIndexRoute
+  '/settings/': typeof LayoutSettingsIndexRoute
   '/summary/': typeof LayoutSummaryIndexRoute
   '/test/': typeof LayoutTestIndexRoute
 }
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/summary/$sectionId': typeof LayoutSummarySectionIdRoute
   '/train/$sectionId': typeof LayoutTrainSectionIdRoute
   '/questions': typeof LayoutQuestionsIndexRoute
+  '/settings': typeof LayoutSettingsIndexRoute
   '/summary': typeof LayoutSummaryIndexRoute
   '/test': typeof LayoutTestIndexRoute
 }
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/_layout/summary/$sectionId': typeof LayoutSummarySectionIdRoute
   '/_layout/train/$sectionId': typeof LayoutTrainSectionIdRoute
   '/_layout/questions/': typeof LayoutQuestionsIndexRoute
+  '/_layout/settings/': typeof LayoutSettingsIndexRoute
   '/_layout/summary/': typeof LayoutSummaryIndexRoute
   '/_layout/test/': typeof LayoutTestIndexRoute
 }
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/summary/$sectionId'
     | '/train/$sectionId'
     | '/questions/'
+    | '/settings/'
     | '/summary/'
     | '/test/'
   fileRoutesByTo: FileRoutesByTo
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
     | '/summary/$sectionId'
     | '/train/$sectionId'
     | '/questions'
+    | '/settings'
     | '/summary'
     | '/test'
   id:
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '/_layout/summary/$sectionId'
     | '/_layout/train/$sectionId'
     | '/_layout/questions/'
+    | '/_layout/settings/'
     | '/_layout/summary/'
     | '/_layout/test/'
   fileRoutesById: FileRoutesById
@@ -151,6 +163,13 @@ declare module '@tanstack/react-router' {
       path: '/summary'
       fullPath: '/summary/'
       preLoaderRoute: typeof LayoutSummaryIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/settings/': {
+      id: '/_layout/settings/'
+      path: '/settings'
+      fullPath: '/settings/'
+      preLoaderRoute: typeof LayoutSettingsIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
     '/_layout/questions/': {
@@ -190,6 +209,7 @@ interface LayoutRouteChildren {
   LayoutSummarySectionIdRoute: typeof LayoutSummarySectionIdRoute
   LayoutTrainSectionIdRoute: typeof LayoutTrainSectionIdRoute
   LayoutQuestionsIndexRoute: typeof LayoutQuestionsIndexRoute
+  LayoutSettingsIndexRoute: typeof LayoutSettingsIndexRoute
   LayoutSummaryIndexRoute: typeof LayoutSummaryIndexRoute
   LayoutTestIndexRoute: typeof LayoutTestIndexRoute
 }
@@ -200,6 +220,7 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutSummarySectionIdRoute: LayoutSummarySectionIdRoute,
   LayoutTrainSectionIdRoute: LayoutTrainSectionIdRoute,
   LayoutQuestionsIndexRoute: LayoutQuestionsIndexRoute,
+  LayoutSettingsIndexRoute: LayoutSettingsIndexRoute,
   LayoutSummaryIndexRoute: LayoutSummaryIndexRoute,
   LayoutTestIndexRoute: LayoutTestIndexRoute,
 }

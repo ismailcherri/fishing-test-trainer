@@ -4,6 +4,7 @@ import {
   BookOpen,
   ClipboardCheck,
   GraduationCap,
+  Settings,
 } from 'lucide-react'
 
 interface Tab {
@@ -37,6 +38,12 @@ const tabs: Tab[] = [
     label: 'Summary',
     icon: <BarChart3 className="h-5 w-5" />,
     isActive: (pathname) => pathname.startsWith('/summary'),
+  },
+  {
+    to: '/settings',
+    label: 'Settings',
+    icon: <Settings className="h-5 w-5" />,
+    isActive: (pathname) => pathname.startsWith('/settings'),
   },
 ]
 
