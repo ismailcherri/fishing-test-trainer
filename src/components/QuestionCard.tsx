@@ -4,7 +4,7 @@ import { getShuffledAnswerKeys } from '#/lib/questions'
 
 interface QuestionCardProps {
   question: Question
-  onAnswer: (correct: boolean) => void
+  onAnswer: (correct: boolean, selectedKey: string) => void
   examMode?: boolean
   onAdvance?: () => void
   showAnswer?: boolean
@@ -23,7 +23,7 @@ export function QuestionCard({ question, onAnswer, examMode = false, onAdvance, 
   const handleSelect = (key: string) => {
     if (selectedKey !== null) return
     setSelectedKey(key)
-    onAnswer(key === question.correctAnswer)
+    onAnswer(key === question.correctAnswer, key)
     if (examMode && onAdvance) {
       setTimeout(() => onAdvance(), 400)
     }

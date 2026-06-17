@@ -46,14 +46,14 @@ function TestPage() {
   }, [data])
 
   const handleAnswer = useCallback(
-    (correct: boolean) => {
+    (_correct: boolean, selectedKey: string) => {
       if (answeredRef.current) return
       answeredRef.current = true
       const question = questions[currentIndex]
       if (!question) return
       setAnswers((prev) => {
         const next = new Map(prev)
-        next.set(question.number, correct ? question.correctAnswer : 'WRONG')
+        next.set(question.number, selectedKey)
         return next
       })
     },
