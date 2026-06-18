@@ -2,7 +2,6 @@ import { ProgressBar } from '#/components/ProgressBar'
 import { QuestionCard } from '#/components/QuestionCard'
 import { getSection, loadQuestions, type Question } from '#/lib/questions'
 import {
-  clearStats,
   getStats,
   getWeakQuestionNumbers,
   isMemorized,
@@ -98,7 +97,6 @@ function QuestionSession() {
   }
 
   const handleRestart = () => {
-    clearStats(sectionId)
     setCurrentIndex(0)
     setAnswered(false)
     setSectionComplete(false)
