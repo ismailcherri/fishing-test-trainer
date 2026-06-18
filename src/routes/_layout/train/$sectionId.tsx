@@ -1,16 +1,26 @@
 import { ProgressBar } from '#/components/ProgressBar'
 import { QuestionCard } from '#/components/QuestionCard'
 import { getSection, loadQuestions, type Question } from '#/lib/questions'
-import { clearStats, getStats, isMemorized, recordAnswer } from '#/lib/stats'
+import {
+  clearStats,
+  getStats,
+  getWeakQuestionNumbers,
+  isMemorized,
+  recordAnswer,
+} from '#/lib/stats'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useCallback, useEffect, useState } from 'react'
 
 export const Route = createFileRoute('/_layout/train/$sectionId')({
   component: QuestionSession,
+  validateSearch: (search: Record<string, unknown>) => ({
+    mode: (search.mode as string) || undefined,
+  }),
 })
 
 function QuestionSession() {
   const { sectionId } = Route.useParams()
+  const { mode } = Route.useSearch()
   const [questions, setQuestions] = useState<Question[]>([])
   const [currentIndex, setCurrentIndex] = useState(0)
   const [loading, setLoading] = useState(true)
@@ -28,12 +38,29 @@ function QuestionSession() {
           setError(`Section "${sectionId}" not found`)
           return
         }
-        setQuestions(section.questions)
-
         const stats = getStats(sectionId)
-        const firstUnanswered = section.questions.findIndex(
-          (q) => !stats.some((s) => s.questionNumber === q.number)
-        )
+        let targetQuestions: Question[] = section.questions
+
+        if (mode === 'weak') {
+          targetQuestions = section.questions.filter((q) =>
+            getWeakQuestionNumbers(sectionId).includes(q.number)
+          )
+        }
+
+        setQuestions(targetQuestions)
+
+        if (targetQuestions.length === 0) {
+          setSectionComplete(true)
+          setCurrentIndex(0)
+          return
+        }
+
+        const firstUnanswered =
+          mode === 'weak'
+            ? 0
+            : targetQuestions.findIndex(
+                (q) => !stats.some((s) => s.questionNumber === q.number)
+              )
         if (firstUnanswered === -1) {
           setSectionComplete(true)
           setCurrentIndex(section.questions.length)
@@ -48,7 +75,7 @@ function QuestionSession() {
     return () => {
       ignore = true
     }
-  }, [sectionId])
+  }, [sectionId, mode])
 
   const handleAnswer = useCallback(
     (correct: boolean) => {

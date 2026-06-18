@@ -4,6 +4,7 @@ import {
   getConfidenceRatio,
   getMemorizedCount,
   getStats,
+  getWeakQuestionNumbers,
   isMemorized,
   recordAnswer,
 } from '../stats'
@@ -56,5 +57,17 @@ describe('stats storage', () => {
     recordAnswer('section-I', 2, false)
     recordAnswer('section-I', 3, true)
     expect(getConfidenceRatio('section-I')).toBe(67)
+  })
+
+  it('getWeakQuestionNumbers returns questions with wrong > correct', () => {
+    recordAnswer('section-I', 1, true)
+    recordAnswer('section-I', 1, false)
+    recordAnswer('section-I', 1, false)
+    recordAnswer('section-I', 2, true)
+    recordAnswer('section-I', 2, true)
+    recordAnswer('section-I', 3, false)
+    recordAnswer('section-I', 4, true)
+    recordAnswer('section-I', 4, false)
+    expect(getWeakQuestionNumbers('section-I')).toEqual([1, 3])
   })
 })

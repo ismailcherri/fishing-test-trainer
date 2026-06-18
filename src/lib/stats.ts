@@ -73,3 +73,9 @@ export function getConfidenceRatio(sectionId: string): number {
   const total = correct + wrong
   return total === 0 ? 0 : Math.round((correct / total) * 100)
 }
+
+export function getWeakQuestionNumbers(sectionId: string): number[] {
+  return getStats(sectionId)
+    .filter((s) => s.wrong > s.correct)
+    .map((s) => s.questionNumber)
+}

@@ -1,5 +1,9 @@
 import type { SectionData } from '#/lib/questions'
-import { getMemorizedCount, getStats } from '#/lib/stats'
+import {
+  getMemorizedCount,
+  getStats,
+  getWeakQuestionNumbers,
+} from '#/lib/stats'
 import { Link } from '@tanstack/react-router'
 
 interface SectionCardProps {
@@ -15,16 +19,13 @@ export function SectionCard({
 }: SectionCardProps) {
   const attempted = getStats(sectionId).length
   const memorized = getMemorizedCount(sectionId)
+  const weakCount = getWeakQuestionNumbers(sectionId).length
   const total = section.questionCount
   const progressPercent =
     total > 0 ? Math.min(Math.round((attempted / total) * 100), 100) : 0
 
   return (
-    <Link
-      to={to}
-      params={{ sectionId }}
-      className="block rounded-lg border border-gray-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
-    >
+    <div className="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <div className="mb-2 flex items-start justify-between">
         <h2 className="font-semibold text-gray-900">{section.name}</h2>
         <span className="text-sm text-gray-500">
@@ -40,6 +41,25 @@ export function SectionCard({
       {attempted > 0 && (
         <p className="mt-1 text-xs text-gray-500">{memorized} memorized</p>
       )}
-    </Link>
+      <div className="mt-3 flex justify-start gap-2">
+        <Link
+          to={to}
+          params={{ sectionId }}
+          className="rounded-lg bg-blue-600 px-3 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-blue-700"
+        >
+          Train
+        </Link>
+        {weakCount > 0 && (
+          <Link
+            to={to}
+            params={{ sectionId }}
+            search={{ mode: 'weak' }}
+            className="rounded-lg bg-amber-600 px-3 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-amber-700"
+          >
+            Train on Weak ({weakCount})
+          </Link>
+        )}
+      </div>
+    </div>
   )
 }
