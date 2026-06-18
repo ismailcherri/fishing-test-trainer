@@ -9253,7 +9253,7 @@
           "subsection": 1,
           "question": "Der Fischereischein kann Personen versagt werden, die wegen ... rechtskräftig verurteilt worden sind?",
           "answers": {
-            "A": "Fälschung eines",
+            "A": "Fälschung eines Fischereischeines",
             "B": "Alkohol am Steuer",
             "C": "Subventionsbetrug"
           },
@@ -10370,7 +10370,7 @@
           "question": "Worauf hat ein Angelfischer immer zu achten? Es ist verboten, ..",
           "answers": {
             "A": "wildlebende Tiere mutwillig zu beunruhigen oder ohne vernünfigen Grund zufangen, zu verletzen oder zu töten",
-            "B": "w a wildlebende Tiere anzufüttern",
+            "B": "wildlebende Tiere anzufüttern",
             "C": "in Badegewässern zu angeln"
           },
           "correctAnswer": "A",
