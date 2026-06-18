@@ -7575,7 +7575,7 @@
           "answers": {
             "A": "Ja, in der Tierschutzschlachtverordnung",
             "B": "Nein, da Fische wechselwarme Organismen sind, existiert keine Bestimmung",
-            "C": "Aufbewahren der Fische Nein, das Schlachten und liegt im freien Ermessen des Anglers"
+            "C": "Nein, das Schlachten und Aufbewahren der Fische liegt im freien Ermessen des Anglers"
           },
           "correctAnswer": "A",
           "questionEn": "Is the slaughter and storage of fish legally regulated?",
@@ -8581,7 +8581,7 @@
           "subsection": 5,
           "question": "Es wird ein untermaßiger Fisch gefangen, der eine künstliche Markierung trägt. Was ist zu unternehmen?",
           "answers": {
-            "A": "Kennzeichnung notieren, sofort schonend melden",
+            "A": "Kennzeichnung notieren, sofort schonend melden zurückzusetzen, Fang melden",
             "B": "An einer geschützten A Stelle hältern und die Fischereibehörde benachrichtigen",
             "C": "Vorsichtig die Markierung entfernen und diese bei dem zuständigen Fischer abgeben"
           },
