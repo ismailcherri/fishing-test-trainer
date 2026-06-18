@@ -83,7 +83,7 @@
         {
           "number": 5,
           "subsection": 1,
-          "question": "Wie werden die Atmungsorgane unserer heimischen Fische",
+          "question": "Wie werden die Atmungsorgane unserer heimischen Fische bezeichnet?",
           "answers": {
             "A": "Kiemen",
             "B": "Lungen",
@@ -461,7 +461,7 @@
         {
           "number": 26,
           "subsection": 2,
-          "question": "Welcher cyprinidenartige Fisch ist im ausgewachsenen Alter ein Raubfisch",
+          "question": "Welcher cyprinidenartige Fisch ist im ausgewachsenen Alter ein Raubfisch?",
           "answers": {
             "A": "Rapfen",
             "B": "Karpfen",
@@ -769,7 +769,7 @@
           "subsection": 2,
           "question": "Zu der Familie der Lachse (Salmonidae) gehören ...?",
           "answers": {
-            "A": "Bachforelle, Bachsaibling. Zander, Kaulbarsch, Bachforelle, Bachsaibling.",
+            "A": "Bachforelle, Bachsaibling.",
             "B": "Zander, Kaulbarsch, Flussbarsch",
             "C": "Gründling, Barbe, Elritze."
           },
@@ -1705,8 +1705,8 @@
           "subsection": 6,
           "question": "Was ist hinsichtlich der Körperlänge weiblicher und männlicher Aale richtig?",
           "answers": {
-            "A": "Weibliche Aale werden",
-            "B": "Männliche Aale werden",
+            "A": "Weibliche Aale werden länger",
+            "B": "Männliche Aale werden länger",
             "C": "Beide Geschlechter werden gleich lang"
           },
           "correctAnswer": "A",
@@ -1829,7 +1829,7 @@
         {
           "number": 102,
           "subsection": 6,
-          "question": "Gehört der Silberkarpfen zu den schutzbedürftigen heimischen Fischarten",
+          "question": "Gehört der Silberkarpfen zu den schutzbedürftigen heimischen Fischarten?",
           "answers": {
             "A": "Nein",
             "B": "Ja",
@@ -2153,7 +2153,7 @@
         {
           "number": 120,
           "subsection": 6,
-          "question": "Welcher Zehnfußkrebs unternimmt flussaufwärts",
+          "question": "Welcher Zehnfußkrebs unternimmt flussaufwärts?",
           "answers": {
             "A": "Wollhandkrabbe",
             "B": "Signalkrebs",
@@ -3095,7 +3095,7 @@
         {
           "number": 52,
           "subsection": 1,
-          "question": "Welche Zone der Standgewässer wird von den meisten Fischarten bevorzugt aufgesucht",
+          "question": "Welche Zone der Standgewässer wird von den meisten Fischarten bevorzugt aufgesucht?",
           "answers": {
             "A": "Die Uferzone",
             "B": "Die Freiwasserzone",
@@ -4793,7 +4793,7 @@
         {
           "number": 26,
           "subsection": 1,
-          "question": "Die ersten Meter der Schnur sind aufgerauht. Wie verhält sich der Angler",
+          "question": "Die ersten Meter der Schnur sind aufgerauht. Wie verhält sich der Angler?",
           "answers": {
             "A": "Er schneidet den aufgerauhten Teil ab",
             "B": "Er fettet die aufgerauhte Schnur",
@@ -5153,7 +5153,7 @@
         {
           "number": 46,
           "subsection": 1,
-          "question": "Darf man tiefgefrorenen Köderfisch aus anderen Gewässern zum Angeln verwenden",
+          "question": "Darf man tiefgefrorenen Köderfisch aus anderen Gewässern zum Angeln verwenden?",
           "answers": {
             "A": "Ja",
             "B": "Nein",
@@ -5243,7 +5243,7 @@
         {
           "number": 51,
           "subsection": 1,
-          "question": "Wieviele Haken dürfen an Wobblern und Spinnsystemen für tote Köderfische verwendet werden",
+          "question": "Wieviele Haken dürfen an Wobblern und Spinnsystemen für tote Köderfische verwendet werden?",
           "answers": {
             "A": "Maximal 3 Haken",
             "B": "2 Haken",
@@ -5315,7 +5315,7 @@
         {
           "number": 55,
           "subsection": 1,
-          "question": "Sind mechanische und chemische Betäubungsmittel beim Fischfang erlaubt",
+          "question": "Sind mechanische und chemische Betäubungsmittel beim Fischfang erlaubt?",
           "answers": {
             "A": "Nein",
             "B": "Ja",
@@ -5369,7 +5369,7 @@
         {
           "number": 58,
           "subsection": 1,
-          "question": "Darf eine Hälterung von Fischen aus dem fahrenden Wasserfahrzeug erfolgen",
+          "question": "Darf eine Hälterung von Fischen aus dem fahrenden Wasserfahrzeug erfolgen?",
           "answers": {
             "A": "Nein",
             "B": "Ja",
@@ -5387,7 +5387,7 @@
         {
           "number": 59,
           "subsection": 1,
-          "question": "Wie kann die Anlandung eines Fisches besonders schonend erfolgen",
+          "question": "Wie kann die Anlandung eines Fisches besonders schonend erfolgen?",
           "answers": {
             "A": "Mit einem Unterfangkescher",
             "B": "Mit einem Gaff",
@@ -6055,7 +6055,7 @@
           "subsection": 1,
           "question": "Welche Fische sollten mit der Schnurstärke 0,35 bis 0,45 mm (monofil) beangelt werden?",
           "answers": {
-            "A": "Hechte, Zander, Großkarpfen, Aale,",
+            "A": "Hechte, Zander, Großkarpfen, Aale, Rapfen",
             "B": "Hasel, Barbe",
             "C": "Ukeleis, Plötzen, Rotfedern, Güstern, Aland"
           },
@@ -8111,7 +8111,7 @@
         {
           "number": 90,
           "subsection": 4,
-          "question": "Ist beim Fang der Fischart Kleine Maräne eine Schonzeit",
+          "question": "Ist beim Fang der Fischart Kleine Maräne eine Schonzeit zubeachten?",
           "answers": {
             "A": "Nein",
             "B": "Ja",
@@ -8399,7 +8399,7 @@
         {
           "number": 106,
           "subsection": 5,
-          "question": "Darf ein geangelter Karpfen mit starkem Rogenansatz verzehrt",
+          "question": "Darf ein geangelter Karpfen mit starkem Rogenansatz verzehrt werden?",
           "answers": {
             "A": "Ja",
             "B": "Ja, aber nur das Fleisch des Schwanzstückes",
@@ -8417,14 +8417,14 @@
         {
           "number": 107,
           "subsection": 5,
-          "question": "Hat der Angler sich den geangelten geschützten Fisch angeeignet,",
+          "question": "Hat der Angler sich den geangelten geschützten Fisch angeeignet, wenn er ihn vorübergehend im Setzkescher hält?",
           "answers": {
             "A": "Ja",
             "B": "Nein, wenn er diesen später wieder freilässt.",
             "C": "Nein, wenn er diesen zur Artbestimmung weiter gibt."
           },
           "correctAnswer": "A",
-          "questionEn": "Has the angler appropriated a caught protected fish if...",
+          "questionEn": "Has the angler appropriated the protected fish they have caught if they keep it temporarily in a keepnet?",
           "answersEn": {
             "A": "Yes",
             "B": "No, if he later releases it",
@@ -10313,7 +10313,7 @@
         {
           "number": 92,
           "subsection": 2,
-          "question": "Welche der genannten Fischarten hat keine Schonzeit und kein",
+          "question": "Welche der genannten Fischarten hat keine Schonzeit und kein Mindestmaß?",
           "answers": {
             "A": "Kaulbarsch",
             "B": "Schneider",
