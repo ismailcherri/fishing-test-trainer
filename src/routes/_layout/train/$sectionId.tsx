@@ -105,7 +105,7 @@ function QuestionSession() {
       } catch (e) {
         if (!ignore)
           setError(e instanceof Error ? e.message : 'Failed to load')
-        setLoading(false)
+        if (!ignore) setLoading(false)
       }
     }
     init()
@@ -120,6 +120,8 @@ function QuestionSession() {
       const session = await getSession(sectionId)
       if (session) {
         setCurrentIndex(session.currentIndex)
+      } else {
+        setCurrentIndex(0)
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to resume session')
@@ -180,7 +182,6 @@ function QuestionSession() {
       )
       if (targetQuestions.length === 0) {
         setSectionComplete(true)
-        setLoading(false)
         return
       }
 
@@ -216,17 +217,21 @@ function QuestionSession() {
   )
 
   const handleNext = async () => {
+    setAnswered(false)
     const nextIndex = currentIndex + 1
-    if (nextIndex >= questions.length) {
-      await advanceSession(sectionId)
-      const stats = await getStats(sectionId)
-      setMemorizedCount(stats.filter(isMemorized).length)
-      setAttemptedCount(stats.length)
-      setSectionComplete(true)
-    } else {
-      setCurrentIndex(nextIndex)
-      setAnswered(false)
-      await advanceSession(sectionId)
+    try {
+      if (nextIndex >= questions.length) {
+        await advanceSession(sectionId)
+        const stats = await getStats(sectionId)
+        setMemorizedCount(stats.filter(isMemorized).length)
+        setAttemptedCount(stats.length)
+        setSectionComplete(true)
+      } else {
+        setCurrentIndex(nextIndex)
+        await advanceSession(sectionId)
+      }
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to advance')
     }
   }
 
@@ -236,10 +241,14 @@ function QuestionSession() {
 
   const handleResetRound = async () => {
     setDialog({ type: 'none' })
-    await resetSessionKeepStats(sectionId)
-    setCurrentIndex(0)
-    setAnswered(false)
-    setSectionComplete(false)
+    try {
+      await resetSessionKeepStats(sectionId)
+      setCurrentIndex(0)
+      setAnswered(false)
+      setSectionComplete(false)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to reset round')
+    }
   }
 
   const handleFullReset = async () => {
@@ -396,6 +405,11 @@ function QuestionSession() {
         title="Restart Section"
         message="Do you want to reset the current round (keeping all stats) or do a full reset (clearing all stats for this section)?"
         actions={[
+          {
+            label: 'Cancel',
+            variant: 'secondary',
+            onClick: () => setDialog({ type: 'none' }),
+          },
           {
             label: 'Full Reset',
             variant: 'danger',
