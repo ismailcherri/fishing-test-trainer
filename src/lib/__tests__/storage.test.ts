@@ -70,6 +70,10 @@ describe('storage (IndexedDB)', () => {
     expect(await getConfidenceRatio('section-I')).toBe(67)
   })
 
+  it('getConfidenceRatio returns 0 with no answers', async () => {
+    expect(await getConfidenceRatio('section-I')).toBe(0)
+  })
+
   it('getWeakQuestionNumbers returns questions with wrong > correct', async () => {
     await recordAnswer('section-I', 1, true)
     await recordAnswer('section-I', 1, false)
