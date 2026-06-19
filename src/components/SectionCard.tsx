@@ -3,8 +3,9 @@ import {
   getMemorizedCount,
   getStats,
   getWeakQuestionNumbers,
-} from '#/lib/stats'
+} from '#/lib/storage'
 import { Link } from '@tanstack/react-router'
+import { useEffect, useState } from 'react'
 
 interface SectionCardProps {
   sectionId: string
@@ -17,9 +18,29 @@ export function SectionCard({
   section,
   to = '/train/$sectionId',
 }: SectionCardProps) {
-  const attempted = getStats(sectionId).length
-  const memorized = getMemorizedCount(sectionId)
-  const weakCount = getWeakQuestionNumbers(sectionId).length
+  const [attempted, setAttempted] = useState(0)
+  const [memorized, setMemorized] = useState(0)
+  const [weakCount, setWeakCount] = useState(0)
+
+  useEffect(() => {
+    let ignore = false
+    async function load() {
+      const [stats, mem, weak] = await Promise.all([
+        getStats(sectionId),
+        getMemorizedCount(sectionId),
+        getWeakQuestionNumbers(sectionId),
+      ])
+      if (ignore) return
+      setAttempted(stats.length)
+      setMemorized(mem)
+      setWeakCount(weak.length)
+    }
+    load()
+    return () => {
+      ignore = true
+    }
+  }, [sectionId])
+
   const total = section.questionCount
   const progressPercent =
     total > 0 ? Math.min(Math.round((attempted / total) * 100), 100) : 0
