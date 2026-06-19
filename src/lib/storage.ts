@@ -138,6 +138,7 @@ export async function recordAnswer(
 }
 
 export async function clearStats(sectionId: string): Promise<void> {
+  await ensureMigrated()
   const db = await getDB()
 
   const tx = db.transaction('stats', 'readwrite')
@@ -152,6 +153,7 @@ export async function clearStats(sectionId: string): Promise<void> {
 }
 
 export async function clearAllStats(): Promise<void> {
+  await ensureMigrated()
   const db = await getDB()
 
   const tx1 = db.transaction('stats', 'readwrite')
