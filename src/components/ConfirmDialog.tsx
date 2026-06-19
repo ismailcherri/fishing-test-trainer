@@ -38,7 +38,7 @@ export function ConfirmDialog({
         if (secondary) secondary.onClick()
       }
     },
-    [actions],
+    [actions]
   )
 
   useEffect(() => {

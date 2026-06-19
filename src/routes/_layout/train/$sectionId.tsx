@@ -64,7 +64,7 @@ function QuestionSession() {
         let targetQuestions: Question[]
         if (isWeakMode) {
           targetQuestions = allQuestions.filter((q) =>
-            weakNums.includes(q.number),
+            weakNums.includes(q.number)
           )
         } else {
           targetQuestions = allQuestions
@@ -98,13 +98,12 @@ function QuestionSession() {
         await createSession(
           sectionId,
           isWeakMode ? 'weak' : 'normal',
-          targetQuestions.map((q) => q.number),
+          targetQuestions.map((q) => q.number)
         )
         setCurrentIndex(0)
         setLoading(false)
       } catch (e) {
-        if (!ignore)
-          setError(e instanceof Error ? e.message : 'Failed to load')
+        if (!ignore) setError(e instanceof Error ? e.message : 'Failed to load')
         if (!ignore) setLoading(false)
       }
     }
@@ -141,7 +140,7 @@ function QuestionSession() {
       let targetQuestions: Question[]
       if (isWeakMode) {
         targetQuestions = section.questions.filter((q) =>
-          weakNums.includes(q.number),
+          weakNums.includes(q.number)
         )
       } else {
         targetQuestions = section.questions
@@ -156,7 +155,7 @@ function QuestionSession() {
       await createSession(
         sectionId,
         isWeakMode ? 'weak' : 'normal',
-        targetQuestions.map((q) => q.number),
+        targetQuestions.map((q) => q.number)
       )
       setCurrentIndex(0)
       setSectionComplete(false)
@@ -178,7 +177,7 @@ function QuestionSession() {
       if (!section) return
 
       const targetQuestions = section.questions.filter((q) =>
-        weakNums.includes(q.number),
+        weakNums.includes(q.number)
       )
       if (targetQuestions.length === 0) {
         setSectionComplete(true)
@@ -189,7 +188,7 @@ function QuestionSession() {
       await createSession(
         sectionId,
         'weak',
-        targetQuestions.map((q) => q.number),
+        targetQuestions.map((q) => q.number)
       )
       setCurrentIndex(0)
       setSectionComplete(false)
@@ -213,7 +212,7 @@ function QuestionSession() {
       await recordAnswer(sectionId, question.number, correct)
       setAnswered(true)
     },
-    [questions, currentIndex, sectionId],
+    [questions, currentIndex, sectionId]
   )
 
   const handleNext = async () => {
@@ -263,7 +262,7 @@ function QuestionSession() {
     if (isWeakMode) {
       const weakNums = await getWeakQuestionNumbers(sectionId)
       targetQuestions = section.questions.filter((q) =>
-        weakNums.includes(q.number),
+        weakNums.includes(q.number)
       )
     } else {
       targetQuestions = section.questions
@@ -278,7 +277,7 @@ function QuestionSession() {
     await createSession(
       sectionId,
       isWeakMode ? 'weak' : 'normal',
-      targetQuestions.map((q) => q.number),
+      targetQuestions.map((q) => q.number)
     )
     setCurrentIndex(0)
     setAnswered(false)
@@ -376,7 +375,11 @@ function QuestionSession() {
         title="Training in Progress"
         message={`You have a training round in progress. Resume from question ${(dialog as { type: 'resume'; currentIndex: number; total: number }).currentIndex} of ${(dialog as { type: 'resume'; currentIndex: number; total: number }).total}?`}
         actions={[
-          { label: 'Start New Round', variant: 'secondary', onClick: handleNewRound },
+          {
+            label: 'Start New Round',
+            variant: 'secondary',
+            onClick: handleNewRound,
+          },
           { label: 'Resume', variant: 'primary', onClick: handleResume },
         ]}
       />
@@ -386,8 +389,13 @@ function QuestionSession() {
         title="Section Completed"
         message="You've completed this section. What would you like to do?"
         actions={[
-          { label: 'Cancel', variant: 'secondary', onClick: handleCancelDialog },
-          ...(dialog.type === 'complete' && (dialog as { type: 'complete'; weakCount: number }).weakCount > 0
+          {
+            label: 'Cancel',
+            variant: 'secondary',
+            onClick: handleCancelDialog,
+          },
+          ...(dialog.type === 'complete' &&
+          (dialog as { type: 'complete'; weakCount: number }).weakCount > 0
             ? [
                 {
                   label: `Train on Weak (${(dialog as { type: 'complete'; weakCount: number }).weakCount})`,
@@ -396,7 +404,11 @@ function QuestionSession() {
                 },
               ]
             : []),
-          { label: 'Start New Round', variant: 'primary', onClick: handleNewRound },
+          {
+            label: 'Start New Round',
+            variant: 'primary',
+            onClick: handleNewRound,
+          },
         ]}
       />
 

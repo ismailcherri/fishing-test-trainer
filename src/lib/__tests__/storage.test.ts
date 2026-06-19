@@ -1,8 +1,9 @@
 import 'fake-indexeddb/auto'
 import { beforeEach, describe, expect, it } from 'vitest'
 import {
-  clearStats,
+  advanceSession,
   clearAllStats,
+  clearStats,
   createSession,
   fullReset,
   getConfidenceRatio,
@@ -12,7 +13,6 @@ import {
   getWeakQuestionNumbers,
   isMemorized,
   recordAnswer,
-  advanceSession,
   restartSession,
 } from '../storage'
 

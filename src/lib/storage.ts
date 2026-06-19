@@ -17,7 +17,12 @@ export interface TrainingSession {
 interface TrainerDB extends DBSchema {
   stats: {
     key: [string, number]
-    value: { sectionId: string; questionNumber: number; correct: number; wrong: number }
+    value: {
+      sectionId: string
+      questionNumber: number
+      correct: number
+      wrong: number
+    }
     indexes: { 'by-section': string }
   }
   sessions: {
@@ -111,7 +116,7 @@ export async function getStats(sectionId: string): Promise<QuestionStats[]> {
 export async function recordAnswer(
   sectionId: string,
   questionNumber: number,
-  correct: boolean,
+  correct: boolean
 ): Promise<void> {
   await ensureMigrated()
   const db = await getDB()
@@ -175,7 +180,7 @@ export async function getMemorizedCount(sectionId: string): Promise<number> {
 }
 
 export async function getTotalAttempts(
-  sectionId: string,
+  sectionId: string
 ): Promise<{ correct: number; wrong: number }> {
   const stats = await getStats(sectionId)
   return {
@@ -191,16 +196,14 @@ export async function getConfidenceRatio(sectionId: string): Promise<number> {
 }
 
 export async function getWeakQuestionNumbers(
-  sectionId: string,
+  sectionId: string
 ): Promise<number[]> {
   const stats = await getStats(sectionId)
-  return stats
-    .filter((s) => s.wrong > s.correct)
-    .map((s) => s.questionNumber)
+  return stats.filter((s) => s.wrong > s.correct).map((s) => s.questionNumber)
 }
 
 export async function getSession(
-  sectionId: string,
+  sectionId: string
 ): Promise<TrainingSession | null> {
   await ensureMigrated()
   const db = await getDB()
@@ -211,7 +214,7 @@ export async function getSession(
 export async function createSession(
   sectionId: string,
   mode: 'normal' | 'weak',
-  questionOrder: number[],
+  questionOrder: number[]
 ): Promise<void> {
   const db = await getDB()
   await db.put('sessions', {

@@ -11,7 +11,7 @@ function SummaryDetail() {
   const { sectionId } = Route.useParams()
   const [questions, setQuestions] = useState<Question[]>([])
   const [statsMap, setStatsMap] = useState<Map<number, QuestionStats>>(
-    new Map(),
+    new Map()
   )
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -33,8 +33,7 @@ function SummaryDetail() {
         setQuestions(section.questions)
         setStatsMap(new Map(stats.map((s) => [s.questionNumber, s])))
       } catch (e) {
-        if (!ignore)
-          setError(e instanceof Error ? e.message : 'Failed to load')
+        if (!ignore) setError(e instanceof Error ? e.message : 'Failed to load')
       } finally {
         if (!ignore) setLoading(false)
       }

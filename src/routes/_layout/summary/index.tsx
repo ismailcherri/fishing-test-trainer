@@ -51,13 +51,12 @@ function SummaryIndex() {
                 wrong: attempts.wrong,
               },
             ] as const
-          }),
+          })
         )
         if (ignore) return
         setSummaries(Object.fromEntries(entries))
       } catch (e) {
-        if (!ignore)
-          setError(e instanceof Error ? e.message : 'Failed to load')
+        if (!ignore) setError(e instanceof Error ? e.message : 'Failed to load')
       }
     }
     load()
