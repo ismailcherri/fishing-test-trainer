@@ -5,13 +5,11 @@ import { getSection, loadQuestions, type Question } from '#/lib/questions'
 import {
   advanceSession,
   createSession,
-  fullReset,
   getSession,
   getStats,
   getWeakQuestionNumbers,
   isMemorized,
   recordAnswer,
-  resetSessionKeepStats,
 } from '#/lib/storage'
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useCallback, useEffect, useState } from 'react'
@@ -20,9 +18,6 @@ type DialogState =
   | { type: 'none' }
   | { type: 'resume'; currentIndex: number; total: number }
   | { type: 'complete'; weakCount: number }
-  | {
-      type: 'restart'
-    }
 
 export const Route = createFileRoute('/_layout/train/$sectionId')({
   component: QuestionSession,
@@ -234,56 +229,6 @@ function QuestionSession() {
     }
   }
 
-  const handleRestartClick = () => {
-    setDialog({ type: 'restart' })
-  }
-
-  const handleResetRound = async () => {
-    setDialog({ type: 'none' })
-    try {
-      await resetSessionKeepStats(sectionId)
-      setCurrentIndex(0)
-      setAnswered(false)
-      setSectionComplete(false)
-    } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to reset round')
-    }
-  }
-
-  const handleFullReset = async () => {
-    setDialog({ type: 'none' })
-    await fullReset(sectionId)
-    const isWeakMode = mode === 'weak'
-    const data = await loadQuestions()
-    const section = getSection(data, sectionId)
-    if (!section) return
-
-    let targetQuestions: Question[]
-    if (isWeakMode) {
-      const weakNums = await getWeakQuestionNumbers(sectionId)
-      targetQuestions = section.questions.filter((q) =>
-        weakNums.includes(q.number)
-      )
-    } else {
-      targetQuestions = section.questions
-    }
-
-    setQuestions(targetQuestions)
-    if (targetQuestions.length === 0) {
-      setSectionComplete(true)
-      return
-    }
-
-    await createSession(
-      sectionId,
-      isWeakMode ? 'weak' : 'normal',
-      targetQuestions.map((q) => q.number)
-    )
-    setCurrentIndex(0)
-    setAnswered(false)
-    setSectionComplete(false)
-  }
-
   if (error) {
     return (
       <div className="p-6 text-center">
@@ -361,14 +306,7 @@ function QuestionSession() {
           Next
         </button>
       )}
-      <div className="mt-6 text-center">
-        <button
-          onClick={handleRestartClick}
-          className="text-sm text-gray-500 underline hover:text-gray-700"
-        >
-          Restart Section
-        </button>
-      </div>
+      <div className="mt-6 text-center" />
 
       <ConfirmDialog
         open={dialog.type === 'resume'}
@@ -408,29 +346,6 @@ function QuestionSession() {
             label: 'Start New Round',
             variant: 'primary',
             onClick: handleNewRound,
-          },
-        ]}
-      />
-
-      <ConfirmDialog
-        open={dialog.type === 'restart'}
-        title="Restart Section"
-        message="Do you want to reset the current round (keeping all stats) or do a full reset (clearing all stats for this section)?"
-        actions={[
-          {
-            label: 'Cancel',
-            variant: 'secondary',
-            onClick: () => setDialog({ type: 'none' }),
-          },
-          {
-            label: 'Full Reset',
-            variant: 'danger',
-            onClick: handleFullReset,
-          },
-          {
-            label: 'Reset Round',
-            variant: 'primary',
-            onClick: handleResetRound,
           },
         ]}
       />
