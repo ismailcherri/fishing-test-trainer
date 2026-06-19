@@ -25,15 +25,19 @@ export function SectionCard({
   useEffect(() => {
     let ignore = false
     async function load() {
-      const [stats, mem, weak] = await Promise.all([
-        getStats(sectionId),
-        getMemorizedCount(sectionId),
-        getWeakQuestionNumbers(sectionId),
-      ])
-      if (ignore) return
-      setAttempted(stats.length)
-      setMemorized(mem)
-      setWeakCount(weak.length)
+      try {
+        const [stats, mem, weak] = await Promise.all([
+          getStats(sectionId),
+          getMemorizedCount(sectionId),
+          getWeakQuestionNumbers(sectionId),
+        ])
+        if (ignore) return
+        setAttempted(stats.length)
+        setMemorized(mem)
+        setWeakCount(weak.length)
+      } catch (err) {
+        console.error('Failed to load stats for section', sectionId, err)
+      }
     }
     load()
     return () => {
