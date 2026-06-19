@@ -1,5 +1,4 @@
-import { loadQuestions } from '#/lib/questions'
-import { clearStats } from '#/lib/stats'
+import { clearAllStats } from '#/lib/storage'
 import { createFileRoute } from '@tanstack/react-router'
 import { useState } from 'react'
 
@@ -14,10 +13,7 @@ function SettingsPage() {
   const handleDelete = async () => {
     setLoading(true)
     try {
-      const data = await loadQuestions()
-      for (const sectionId of Object.keys(data.sections)) {
-        clearStats(sectionId)
-      }
+      await clearAllStats()
       setCleared(true)
     } finally {
       setLoading(false)
