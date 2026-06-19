@@ -1,5 +1,5 @@
 import { getSection, loadQuestions, type Question } from '#/lib/questions'
-import { getStats, isMemorized } from '#/lib/stats'
+import { getStats, isMemorized, type QuestionStats } from '#/lib/storage'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
 
@@ -10,13 +10,20 @@ export const Route = createFileRoute('/_layout/summary/$sectionId')({
 function SummaryDetail() {
   const { sectionId } = Route.useParams()
   const [questions, setQuestions] = useState<Question[]>([])
+  const [statsMap, setStatsMap] = useState<Map<number, QuestionStats>>(
+    new Map(),
+  )
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     let ignore = false
-    loadQuestions()
-      .then((data) => {
+    async function load() {
+      try {
+        const [data, stats] = await Promise.all([
+          loadQuestions(),
+          getStats(sectionId),
+        ])
         if (ignore) return
         const section = getSection(data, sectionId)
         if (!section) {
@@ -24,11 +31,15 @@ function SummaryDetail() {
           return
         }
         setQuestions(section.questions)
-      })
-      .catch((e) => setError(e instanceof Error ? e.message : 'Failed'))
-      .finally(() => {
+        setStatsMap(new Map(stats.map((s) => [s.questionNumber, s])))
+      } catch (e) {
+        if (!ignore)
+          setError(e instanceof Error ? e.message : 'Failed to load')
+      } finally {
         if (!ignore) setLoading(false)
-      })
+      }
+    }
+    load()
     return () => {
       ignore = true
     }
@@ -37,9 +48,6 @@ function SummaryDetail() {
   if (loading)
     return <div className="p-6 text-center text-gray-500">Loading...</div>
   if (error) return <div className="p-6 text-center text-red-600">{error}</div>
-
-  const stats = getStats(sectionId)
-  const statsMap = new Map(stats.map((s) => [s.questionNumber, s]))
 
   return (
     <div className="p-4">
@@ -60,7 +68,7 @@ function SummaryDetail() {
                 <span
                   className={`mt-0.5 text-sm ${memorized ? 'text-green-500' : 'text-gray-300'}`}
                 >
-                  {memorized ? '●' : '○'}
+                  {memorized ? '\u25CF' : '\u25CB'}
                 </span>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-gray-900">
@@ -68,7 +76,9 @@ function SummaryDetail() {
                   </p>
                   {stat ? (
                     <p className="mt-1 text-xs text-gray-500">
-                      ✓{stat.correct} ✗{stat.wrong}
+                      {'\u2713'}
+                      {stat.correct} {'\u2717'}
+                      {stat.wrong}
                       {memorized && (
                         <span className="ml-2 text-green-600">Memorized</span>
                       )}
